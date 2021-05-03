@@ -132,6 +132,7 @@ class App():
 		obj_id_of_cluster_str = push_clusterer_definition_to_seeq_property(byte_cluster_str, secrets.token_hex(10))
 
 		self.clusterer_seeq_id = obj_id_of_cluster_str
+		self.idlist = idlist
 		return
 
 	def push_cluster_formulas(self, checksum):
