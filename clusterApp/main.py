@@ -52,7 +52,7 @@ class App():
 			query_str = ""
 			for sig in signal_list:
 				query_str += "Name == '{}' or ".format(sig)
-			query = query [:-4] #delete "or" from the end
+			query = query_str[:-4] #delete "or" from the end
 			
 			to_pull = self.signals.query(query)
 
