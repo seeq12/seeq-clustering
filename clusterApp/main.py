@@ -125,8 +125,7 @@ class App():
 		#todo: update scalar to work with cluterer
 
 		idlist = [self.signals.query("Name == '{}'".format(conditioner)).ID.values[0] for conditioner in conditioners]
-
-		bodies = [] #initializing for spy.push
+		
 		byte_clusterer = pickle.dumps(self.clusterer)
 		byte_cluster_str = byte_clusterer.hex()
 		obj_id_of_cluster_str = push_clusterer_definition_to_seeq_property(byte_cluster_str, secrets.token_hex(10))
@@ -143,6 +142,7 @@ class App():
 			checksum (str): unique checksum that matches externalCalc checksum.
 		"""
 		conditioners = self.clusteron
+		bodies = [] #initializing for spy.push
 
 		#determine if we are doing density based or visual:
 		try:
