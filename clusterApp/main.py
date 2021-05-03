@@ -6,10 +6,35 @@ from .. import historicalBenchmarking
 
 __all__ = ('App',)
 
+def push_clusterer_definition_to_seeq_property(serialized_definition, unique_key):
+	"""Push a serialized definition of clusterer to a seeq propery. The name will be EKPPropertyStorage<unique_key>
+
+	args:
+		serialized_definition (str): Serialized string of binary blob defining the clusterer
+		unique_key (str): Identifier for EKPPropertyStorage in Seeq
+
+	returns:
+		(str) : ID of pushed capsule.
+
+	"""
+	data = pd.DataFrame({
+	    'Name':['EKPPropertyStorage{}'.format(unique_key)],
+	    'Capsule Start':[pd.Timestamp("10/31/1993")], 
+	    'Capsule End': [pd.Timestamp("11/1/1993")],
+	    'clusterDefn': ['{}'.format(serialized_definition)],
+	    'Type':['Condition'],
+	    'Maximum Duration':['1day']
+	})
+
+	pushed_ID = seeqInterface.push_capsule(data)
+	return pushed_ID
+
+
 class App():
 
 	def __init__(self, workbook_id, worksheet_id, api_url, 
 		auth_token, quiet = True):
+		"""need docstring"""
 
 		self.workbook_id = workbook_id
 		self.worksheet_id = worksheet_id
@@ -75,6 +100,127 @@ class App():
 		self.clusteron = clusteron
 		self.clusterer = clusterer
 		self.xname = signal_list[0]
-		self.yname = signal_list[1]
+		self.yname = signal_list[1]		
 
 		return
+
+
+	def push_clusterer(self,):
+		"""
+		Push clusterer to Seeq. Stored as binary blob on Seeq Property.
+		"""
+		pushed_ids = dict()
+
+		conditioners = self.clusteron
+
+		try:
+			scalar = self.extent_scalar
+		except AttributeError:
+			scalar = 1.25
+		
+		#todo: update scalar to work with cluterer
+
+		idlist = [self.signals.query("Name == '{}'".format(conditioner)).ID.values[0] for conditioner in conditioners]
+
+		bodies = [] #initializing for spy.push
+		byte_clusterer = pickle.dumps(self.clusterer)
+		byte_cluster_str = byte_clusterer.hex()
+		obj_id_of_cluster_str = push_clusterer_definition_to_seeq_property(byte_cluster_str, secrets.token_hex(10))
+
+		self.clusterer_seeq_id = obj_id_of_cluster_str
+		return
+
+	def push_cluster_formulas(self, checksum):
+		"""
+		Push cluster formulas to Seeq.
+
+		args:
+			checksum (str): unique checksum that matches externalCalc checksum.
+		"""
+		#determine if we are doing density based or visual:
+		try:
+			iterable = np.sort(list(set(self.clusterer.labels_)))
+		except AttributeError: #case when we are doing contours and visual selection
+			iterable = [0]
+
+		for clustern in iterable:
+
+			if clustern == -1:
+				continue
+
+			##now generate the formula
+			alphabet = 'abcdefghijklmnopqrstuvwxyz'
+			
+			seeq_dollarsign_ids = []
+			j = 0 #multiplier duplicate count of letters
+			for i in range(len(conditioners)):
+			    if np.mod(i,26) == 0:
+			        j+=1
+			    seeq_dollarsign_ids.append(alphabet[np.mod(i, 26)]*j)
+
+			insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
+			for dollarsign_id in seeq_dollarsign_ids:
+				insertion_into_formula += "$" + str(dollarsign_id) + ","
+			insertion_into_formula = insertion_into_formula[:-1]
+
+			#TODO: finish up formula
+			formula_string = "externalCalculation('{}', '{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
+			formula = formula_string.format(checksum, self.api_url, key, obj_id_of_cluster_str, clustern, self.grid)
+			#print(formula)
+			
+			parametersdict = dict({seeq_dollarsign_ids[i]:idlist[i] for i in range(len(conditioners))})
+			body={'Name':'EKPBP_'+str(secrets.token_hex(5)) + ' condition', 'Formula':formula, 
+			'Formula Parameters':parametersdict, 'Type':'Condition'}
+			bodies.append(body)
+
+		metatag = pd.DataFrame(bodies)
+
+		condition_results = seeqInterface.push_formula(metatag, self.workbook_id, self.worksheet_name)
+		self.condition_results = condition_results
+		return
+
+	def update_temp_wkstep(self):
+		"""
+		need docstring
+		"""
+		worksheet = self.worksheet
+		#set to none displayed
+		display_items_none = pd.DataFrame({'ID':[], 'Name':[]})
+		worksheet.display_items = display_items_none
+		returned = self.workbook.push()
+		return
+
+
+	def update_wkstep_and_push(self):
+		"""
+		need docstring
+		"""
+		workbook = seeqInterface.get_workbook(self.workbook_id)
+		worksheet = seeqInterface.get_worksheet_from_workbook(self.worksheet_id, workbook)
+
+		new_display_items = pd.concat((self.signals[['Name', 'ID', 'Type']], self.condition_results[['Name', 'ID', 'Type']]))
+
+		worksheet.display_items = new_display_items
+		#with updated display items
+		workbook.push()
+
+		#get workbook with new updates.
+		workbook = seeqInterface.get_workbook(self.workbook_id)
+		worksheet = seeqInterface.get_worksheet_from_workbook(self.worksheet_id, workbook)
+
+		#get workstep
+		new_workstep = worksheet._branch_current_workstep()
+		wkstp_stores = new_workstep.get_workstep_stores()
+
+		#put into scatterplot with colors
+		sq_scatter_plot_store = wkstp_stores['sqScatterPlotStore']
+		sq_scatter_plot_store.update({'colorConditionIds':to_color_condition_ids})
+		wkstp_stores['sqWorksheetStore'].update({'viewKey':'SCATTER_PLOT'})
+
+		new_workstep.set_as_current()
+
+		returned = workbook.push()
+		return
+
+
+
