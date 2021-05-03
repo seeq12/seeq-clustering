@@ -220,6 +220,8 @@ class App():
 		wkstp_stores = new_workstep.get_workstep_stores()
 
 		#put into scatterplot with colors
+		to_color_condition_ids = list(self.condition_results['ID'].values)
+		
 		sq_scatter_plot_store = wkstp_stores['sqScatterPlotStore']
 		sq_scatter_plot_store.update({'colorConditionIds':to_color_condition_ids})
 		wkstp_stores['sqWorksheetStore'].update({'viewKey':'SCATTER_PLOT'})
