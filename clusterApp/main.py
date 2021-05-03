@@ -175,7 +175,7 @@ class App():
 			formula = formula_string.format(checksum, self.api_url, key, self.clusterer_seeq_id, clustern, self.grid)
 			#print(formula)
 			
-			parametersdict = dict({seeq_dollarsign_ids[i]:idlist[i] for i in range(len(conditioners))})
+			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
 			body={'Name':'EKPBP_'+str(secrets.token_hex(5)) + ' condition', 'Formula':formula, 
 			'Formula Parameters':parametersdict, 'Type':'Condition'}
 			bodies.append(body)
