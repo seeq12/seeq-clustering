@@ -139,6 +139,8 @@ class App():
 		args:
 			checksum (str): unique checksum that matches externalCalc checksum.
 		"""
+		conditioners = self.clusteron
+		
 		#determine if we are doing density based or visual:
 		try:
 			iterable = np.sort(list(set(self.clusterer.labels_)))
