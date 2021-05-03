@@ -9,6 +9,9 @@ __all__ = ('get_signals',
 	'get_workbook',
 	'get_worksheet_from_workbook',
 	'get_worksheet_name',
+	'get_signals_samples',
+	'push_capsule',
+
 )
 
 def get_signals(worksheet):
@@ -125,3 +128,60 @@ def get_worksheet_name(worksheet):
 
 	return worksheet.name
 
+def get_signals_samples(signals, display_range, grid, quiet = True):
+	"""
+	Get samples for set of signals.
+
+	args: 
+		signals (pandas.DataFrame): Signals
+		display_range (dict): Range to pull samples
+		grid (str): The grid to pull the signals. (see get_minumum_maximum_interpolation_for_signals_df())
+		quiet (bool): quiet
+
+	returns:
+		out (pandas.DataFrame): Samples
+	"""
+	out = spy.pull(
+			signals, 
+			start = display_range['Start'],
+			end = display_range['End'],
+			grid = grid
+		)
+	return out
+
+def push_capsule(data, quiet = True):
+	"""Push capsule to Seeq. Return ID of pushed capsule
+
+	args:
+		data (pandas.DataFrame): Capsule data.
+		quiet (bool): quiet
+
+	returns: 
+		id (str): ID of pushed capsule
+	"""
+	pushed_data_response = spy.push(metadata = data, quiet = quiet)
+
+	return pushed_data_response['ID'][0]
+
+def push_formula(data, workbook_id, worksheet_name, quiet = True):
+	"""
+	Push formula to Seeq. Return results of push
+
+	args:
+		data (pandas.DataFrame): Data to push.
+		workbook_id (str): ID of workbook to scope to.
+		worksheet_name (str): Name of the worksheet to scope to
+		quiet (bool): quiet
+
+	returns:
+		results (pandas.DataFrame): results
+	"""
+
+	results = spy.push(
+			metadata=data, 
+			workbook = workbook_id, 
+			worksheet = worksheet_name,
+			quiet = quiet
+		)
+
+	return results
