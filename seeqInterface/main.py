@@ -11,6 +11,7 @@ __all__ = ('get_signals',
 	'get_worksheet_name',
 	'get_signals_samples',
 	'push_capsule',
+	'push_formula',
 
 )
 
