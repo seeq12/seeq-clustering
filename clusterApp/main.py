@@ -6,6 +6,8 @@ import secrets
 from .. import seeqInterface
 from .. import historicalBenchmarking
 
+key = 'xAneo3b9Qsa5402ai4YqAg'
+
 __all__ = ('App',)
 
 def push_clusterer_definition_to_seeq_property(serialized_definition, unique_key):
@@ -140,7 +142,7 @@ class App():
 			checksum (str): unique checksum that matches externalCalc checksum.
 		"""
 		conditioners = self.clusteron
-		
+
 		#determine if we are doing density based or visual:
 		try:
 			iterable = np.sort(list(set(self.clusterer.labels_)))
@@ -169,7 +171,7 @@ class App():
 
 			#TODO: finish up formula
 			formula_string = "externalCalculation('{}', '{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
-			formula = formula_string.format(checksum, self.api_url, key, obj_id_of_cluster_str, clustern, self.grid)
+			formula = formula_string.format(checksum, self.api_url, key, self.clusterer_seeq_id, clustern, self.grid)
 			#print(formula)
 			
 			parametersdict = dict({seeq_dollarsign_ids[i]:idlist[i] for i in range(len(conditioners))})
