@@ -207,7 +207,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, indexofsele
     
     data_to_push['clustern'] = [0 for i in range(len(data_to_push))]
     
-    app.cluster(app.signals, mcs, datadf = data_to_push)
+    app.cluster(app.signals.Name.values, mcs, datadf = data_to_push)
     app.update_temp_wkstep() #adjusts to 1sec
     
     time.sleep(1)
