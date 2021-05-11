@@ -156,6 +156,9 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     
     s2 = ColumnDataSource(data=dict(x=[], y=[]))
 
+
+    #the following will write a global variable to the ipython kernel
+
     out = s1.selected.js_on_change('indices', CustomJS(args=dict(s1=s1, s2=s2), code="""
             var inds = cb_obj.indices;
             var d1 = s1.data;
@@ -204,7 +207,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, indexofsele
     
     data_to_push['clustern'] = [0 for i in range(len(data_to_push))]
     
-    app.cluster(signals, mcs, datadf = data_to_push)
+    app.cluster(app.signals, mcs, datadf = data_to_push)
     app.update_temp_wkstep() #adjusts to 1sec
     
     time.sleep(1)
