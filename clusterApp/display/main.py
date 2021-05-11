@@ -1,6 +1,6 @@
 import sys
 
-__all__ = ('loading')
+__all__ = ('loading', )
 
 
 def loading():
