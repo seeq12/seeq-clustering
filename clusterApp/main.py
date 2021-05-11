@@ -141,6 +141,8 @@ class App():
 		args:
 			checksum (str): unique checksum that matches externalCalc checksum.
 		"""
+		self.push_clusterer
+
 		conditioners = self.clusteron
 		bodies = [] #initializing for spy.push
 
