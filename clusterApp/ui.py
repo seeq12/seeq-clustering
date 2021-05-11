@@ -22,7 +22,8 @@ def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
     return
 
 
-def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, default_override = 200, percent_of_data = 20):
+def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, 
+    default_override = 200, percent_of_data = 20):
     """Cluster and generate conditions unsupervised.
 
     args:
@@ -32,6 +33,7 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
         minClusterSize (ipywidgets.widget): minClustersize
         exactBox (ipywidgets.widget): exactBox
         percentOfData (ipywidgets.widget): percentOfData
+        clusterExtent (ipywidgets.widget): clusterExtent
         default_override (int):
         percent_of_data (int or float):
 
