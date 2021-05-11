@@ -44,6 +44,7 @@ class App():
 		self.worksheet_id = worksheet_id
 		self.api_url = api_url
 		self.auth_token = auth_token
+		self.quiet = quiet
 
 		workbook = seeqInterface.get_workbook(workbook_id, quiet = False) #quiet False for loading
 		self.workbook = workbook
