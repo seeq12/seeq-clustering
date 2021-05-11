@@ -179,11 +179,11 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     return 
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, uiModule):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent):
 
 
     try:
-        indexofselection = uiModule.indexofselection
+        indexofselection = indexofselection
     except AttributeError:
         print('SELECTION ERROR: please use the lasso tool and plot to make a cluster selection')
         return 
