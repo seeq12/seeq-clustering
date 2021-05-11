@@ -1,9 +1,15 @@
 from IPython.display import display
 from ipywidgets import VBox, HBox, widgets
+import time
+import sys
+import os
 
-__all__ = ('checksum','selectType',)
+__all__ = ('checksum','selectType','clusterUnsupervised')
 
 checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
+
+def clear():
+    os.system( 'cls' )
 
 
 def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
@@ -49,18 +55,21 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, default
     app.cluster(signals, mcs, default_override=default_override, percent_of_data=percent_of_data)
     app.update_temp_wkstep() #adjusts to 1sec
     
+    #sleep to let the workstep adjust
     time.sleep(1)
     
-    cl.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
+    #for cluster extent looks at .extent_scalar
+    app.extent_scalar = float(clusterExtent.value) 
     
     sys.stdout.write("\rPushing Conditions...")
-    cl.push_cluster_formulas(checksum)
+    clear()
+    app.push_cluster_formulas(checksum)
     sys.stdout.write("\rOrganizing Worksheet...")
     sys.stdout.flush()
     
     time.sleep(1)
-    
-    cl.update_wkstep_and_push()
+    clear()
+    app.update_wkstep_and_push()
     sys.stdout.write("\rSUCCESS.                                 ")
     sys.stdout.flush()
     return 
