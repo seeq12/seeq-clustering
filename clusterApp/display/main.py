@@ -1,8 +1,7 @@
 import sys
 
-__all__ = ('checksum', 'loading')
+__all__ = ('loading')
 
-checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
 
 def loading():
 	sys.stdout.write("\rLoading....")
