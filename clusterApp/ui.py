@@ -14,7 +14,7 @@ from bokeh.resources import INLINE
 from bokeh.palettes import Viridis, Blues
 import itertools
 
-__all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised')
+__all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', 'startSupervised')
 
 checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
 
@@ -88,7 +88,7 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     sys.stdout.flush()
     return 
 
-def clusterSupervised(app, buttons, xsignal, ysignal):
+def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     for button in buttons:
         button.close()
@@ -174,12 +174,14 @@ def clusterSupervised(app, buttons, xsignal, ysignal):
     )
     layout = row(p1)
     show(layout)
-    display(VBox([button_other]))
+    display(VBox([buttonClusterSupervised]))
     datasource = s1
     return
     
-def define_vis_cluster(*args):
-    """when you click define cluster, this runs"""
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent):
+    
+    for button in buttons:
+        button.close()
     
     try:
         test = indexofselection
@@ -197,30 +199,30 @@ def define_vis_cluster(*args):
     sys.stdout.write("\rSelecting unsampled data...")
     indexer = find_true_points_in_selection_boundary(indexofselection, check_points, hist_grid_points) 
     data_to_push = datadf.iloc[indexer,:]
-    cl.clusteron = datadf.columns
-    cl.xname = xsignal.value
-    cl.yname = ysignal.value
+    app.clusteron = datadf.columns
+    app.xname = xsignal.value
+    app.yname = ysignal.value
     
     sigs = [x,y]
     mcs = len(data_to_push)#all of them 
     
     data_to_push['clustern'] = [0 for i in range(len(data_to_push))]
     
-    cl.cluster_go(signals, mcs, datadf = data_to_push)
-    cl.update_temp_wkstep() #adjusts to 1sec
+    app.cluster(signals, mcs, datadf = data_to_push)
+    app.update_temp_wkstep() #adjusts to 1sec
     
     time.sleep(1)
     
-    cl.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
+    app.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
     
     sys.stdout.write("\rPushing Conditions...")
-    cl.push_cluster_formulas(checksum)
+    app.push_cluster_formulas(checksum)
     sys.stdout.write("\rOrganizing Worksheet...")
     sys.stdout.flush()
     
     time.sleep(1)
     
-    cl.update_wkstep_and_push()
+    app.update_wkstep_and_push()
     sys.stdout.write("\rSUCCESS.                                 ")
     sys.stdout.flush()
     return
@@ -235,7 +237,7 @@ def find_true_points_in_selection_boundary(indexofselection, check_points, hist_
     from scipy.spatial import ConvexHull, convex_hull_plot_2d
     hull = ConvexHull(selection_boundary_inclusive)
     simps = hull.simplices
-    #TODO annotate
+
     #this will turn out simplices into a counter clockwise circle 
 
     current = 0 #where to start
