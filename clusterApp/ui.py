@@ -180,13 +180,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     return 
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent):
-
-    try:
-        test = indexofselection
-    except NameError:
-        print('SELECTION ERROR: please use the lasso tool and plot to make a cluster selection')
-        return 
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, indexofselection):
     
     for button in buttons:
         button.close()
