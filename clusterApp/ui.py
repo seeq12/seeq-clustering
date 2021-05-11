@@ -13,7 +13,7 @@ from bokeh.resources import INLINE
 from bokeh.palettes import Viridis, Blues
 import itertools
 
-__all__ = ('checksum','selectType','clusterUnsupervised')
+__all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised')
 
 checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
 
