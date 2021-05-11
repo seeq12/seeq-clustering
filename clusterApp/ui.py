@@ -4,6 +4,7 @@ import time
 import sys
 import os
 import numpy as np
+import IPython
 
 from .. import seeqInterface
 
