@@ -1,3 +1,5 @@
+import sys
+
 __all__ = ('checksum', 'loading')
 
 checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
