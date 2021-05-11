@@ -18,12 +18,6 @@ __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', '
 
 checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
 
-class tmpGlobal():
-
-    def __init__(self):
-        return
-
-
 def clear():
     os.system( 'cls' )
 
@@ -183,21 +177,13 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     display(VBox([buttonClusterSupervised]))
     datasource = s1
 
-    tmpglobal = tmpGlobal()
-    tmpglobal.datadf = datadf
-    tmpglobal.hist_grid_points = hist_grid_points
-    tmpglobal.datasource = datasource
-    tmpglobal.indexofselection = indexofselection
-    return tmpglobal
+    return 
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, tmpglobal):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, uiModule):
 
-    datadf = tmpglobal.datadf
-    hist_grid_points = tmpglobal.hist_grid_points
-    datasource = tmpglobal.datasource
-    
+
     try:
-        indexofselection = tmpglobal.indexofselection
+        indexofselection = uiModule.indexofselection
     except AttributeError:
         print('SELECTION ERROR: please use the lasso tool and plot to make a cluster selection')
         return 
