@@ -116,7 +116,6 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     datadf.dropna(inplace = True)
 
-    x, y = datadf.columns
 
     X = datadf[x]
     Y = datadf[y]
