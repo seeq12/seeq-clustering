@@ -117,7 +117,10 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
             grid = app.grid, quiet = app.quiet
         )
 
+    print(len(datadf))
     datadf.dropna(inplace = True)
+    print(len(datadf))
+    print(datadf.columns)
 
 
     X = datadf[x]
