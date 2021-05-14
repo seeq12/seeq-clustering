@@ -98,6 +98,9 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     output_notebook(INLINE)
 
     x, y = xsignal.value, ysignal.value
+    if x == y:
+        print('Must select different signals for X and Y! Please restart.')
+        return
     global datadf
 
     #get the samples
