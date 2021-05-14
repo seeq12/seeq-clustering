@@ -118,6 +118,10 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     datadf.dropna(inplace = True)
 
+    #modify the grid to use only signals in visual clustering:
+    grid = seeqInterface.get_minumum_maximum_interpolation_for_signals_df([x, y], app.display_range)
+    app.grid = grid
+
 
     X = datadf[x]
     Y = datadf[y]
