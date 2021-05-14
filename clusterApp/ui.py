@@ -123,6 +123,14 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     X = datadf[x]
     Y = datadf[y]
 
+    #check if we have any constant signals. This is not allowed because clustering works on variability:
+    if len(set(X.values)) == 1:
+        print('Cannot use constant signals in clustering. Signal "{}" is constant'.format(x))
+        return 
+    if len(set(Y.values)) == 1:
+        print('Cannot use constant signals in clustering. Signal "{}" is constant'.format(y))
+        return
+
     #randomly down sample
     indices = np.random.choice(len(X), 1000)
     Xnew = X[indices]
