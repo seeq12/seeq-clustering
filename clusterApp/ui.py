@@ -101,7 +101,6 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     if x == y:
         print('Must select different signals for X and Y! Please restart.')
         return
-    global datadf
 
     #get the samples
     query_str = ""
@@ -117,10 +116,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
             grid = app.grid, quiet = app.quiet
         )
 
-    print(len(datadf))
     datadf.dropna(inplace = True)
-    print(len(datadf))
-    print(datadf.columns)
 
 
     X = datadf[x]
@@ -163,7 +159,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     #build histogram grid:
     xcoords = [(xe[i] + xe[i-1])/2 for i in range(1, len(xe))]
     ycoords = [(ye[i] + ye[i-1])/2 for i in range(1, len(ye))]
-    global hist_grid_points
+    
     hist_grid_points = np.array(list(itertools.product(xcoords, ycoords))) # a set of points for each bixel of the histogram
 
     s1 = ColumnDataSource(data=dict(x=hist_grid_points[:,0], y=hist_grid_points[:,1]))
@@ -196,9 +192,9 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
     display(VBox([buttonClusterSupervised]))
     datasource = s1
 
-    return 
+    return datadf, hist_grid_points
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, indexofselection):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points):
     
     for button in buttons:
         button.close()
