@@ -33,7 +33,7 @@ def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
     return
 
 
-def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, 
+def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, basename, timeOfRun,
     default_override = 200, percent_of_data = 20):
     """Cluster and generate conditions unsupervised.
 
@@ -77,7 +77,7 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     
     sys.stdout.write("\rPushing Conditions...")
     clear()
-    app.push_cluster_formulas(checksum)
+    app.push_cluster_formulas(checksum, basename, timeOfRun)
     sys.stdout.write("\rOrganizing Worksheet...")
     sys.stdout.flush()
     
@@ -198,7 +198,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     return datadf, hist_grid_points
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points, basename, timeOfRun):
     
     for button in buttons:
         button.close()
@@ -230,7 +230,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, ind
     app.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
     
     sys.stdout.write("\rPushing Conditions...")
-    app.push_cluster_formulas(checksum)
+    app.push_cluster_formulas(checksum, basename, timeOfRun)
     sys.stdout.write("\rOrganizing Worksheet...")
     sys.stdout.flush()
     
