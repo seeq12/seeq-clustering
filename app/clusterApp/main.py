@@ -135,12 +135,14 @@ class App():
 		self.idlist = idlist
 		return
 
-	def push_cluster_formulas(self, checksum):
+	def push_cluster_formulas(self, checksum, basename, timeOfRun):
 		"""
 		Push cluster formulas to Seeq.
 
 		args:
 			checksum (str): unique checksum that matches externalCalc checksum.
+			basename (str): Basename for the clusters
+			timeOfRun (str): Datetime of run. This gives us a unique identifier.
 		"""
 		self.push_clusterer()
 
@@ -179,7 +181,8 @@ class App():
 			#print(formula)
 			
 			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
-			body={'Name':'EKPBP_'+str(secrets.token_hex(5)) + ' condition', 'Formula':formula, 
+			name = basename + ' ' + str(clustern)  + ' ' + timeOfRun
+			body={'Name':name, 'Formula':formula, 
 			'Formula Parameters':parametersdict, 'Type':'Condition'}
 			bodies.append(body)
 
