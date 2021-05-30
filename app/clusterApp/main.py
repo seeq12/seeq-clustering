@@ -155,6 +155,11 @@ class App():
 		except AttributeError: #case when we are doing contours and visual selection
 			iterable = [0]
 
+		#need to account for alphanumeric sorting of clusters:
+		max_clustern = max(iterable)
+		#how long should each label be? i.e. if we have over 10 clusters, each label should be two digits. if over 100, it should be 3 digits
+		len_of_label = len(str(max_clustern))
+
 		for clustern in iterable:
 
 			if clustern == -1:
@@ -181,7 +186,10 @@ class App():
 			#print(formula)
 			
 			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
-			name = basename + ' ' + str(clustern)  + ' ' + timeOfRun
+
+			label = (str('0'*len_of_label) + str(clustern))[-len_of_label:] #for alpha numeric sorting if needed. 
+
+			name = basename + ' ' + label + ' ' + timeOfRun
 			body={'Name':name, 'Formula':formula, 
 			'Formula Parameters':parametersdict, 'Type':'Condition'}
 			bodies.append(body)
