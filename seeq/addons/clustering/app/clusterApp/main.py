@@ -339,7 +339,7 @@ class GUI():
 
 	### App functions ###
 	#load the App
-	def loadWorksheet(wkb, wks, api_url, auth_token, quiet):
+	def loadWorksheet(self, wkb, wks, api_url, auth_token, quiet):
 		app = App(wkb, wks, api_url, auth_token, quiet = quiet)
 		now = datetime.datetime.now()
 		now_str = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -367,7 +367,7 @@ class GUI():
 		decisionType = None
 		
 		clear_output()
-		app, now_str = loadWorksheet(wkb, wks, api_url, auth_token, quiet = quiet)
+		app, now_str = self.loadWorksheet(wkb, wks, api_url, auth_token, quiet = quiet)
 		signals = app.signals.Name.values
 		clear_output()
 		
@@ -480,12 +480,12 @@ class GUI():
 			buttonStartSupervised
 		]
 		
-		buttonSelectSupervised.on_click(selectSupervised)
-		buttonSelectUnsupervised.on_click(selectUnsupervised)
-		buttonClusterUnsupervised.on_click(uiClusterUnsupervised)
-		buttonStartSupervised.on_click(uiStartSupervised)
-		buttonClusterSupervised.on_click(uiClusterSupervised)
-		_reload.on_click(reload)
+		buttonSelectSupervised.on_click(self.selectSupervised)
+		buttonSelectUnsupervised.on_click(self.selectUnsupervised)
+		buttonClusterUnsupervised.on_click(self.uiClusterUnsupervised)
+		buttonStartSupervised.on_click(self.uiStartSupervised)
+		buttonClusterSupervised.on_click(self.uiClusterSupervised)
+		_reload.on_click(self.reload)
 
 		display(VBox([HBox([logo,_working]),
 					  HBox([_under_logo]), HBox([_reload])]), 
@@ -494,5 +494,5 @@ class GUI():
 		
 		return
 
-	def run():
+	def run(self,):
 		self.loadApp(self.wkb, self.wks, self.api_url, self.auth_token, quiet = True)
