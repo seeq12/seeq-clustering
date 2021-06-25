@@ -22,7 +22,7 @@ from .. import historicalBenchmarking
 
 key = 'xAneo3b9Qsa5402ai4YqAg'
 
-__all__ = ('App',)
+__all__ = ('GUI')
 
 def push_clusterer_definition_to_seeq_property(serialized_definition, unique_key):
 	"""Push a serialized definition of clusterer to a seeq propery. The name will be EKPPropertyStorage<unique_key>
