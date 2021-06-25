@@ -264,7 +264,7 @@ class App():
 class GUI():
 
 
-	def __init__(url, auth_token):
+	def __init__(self, url, auth_token):
 		#worsheet id
 		wks = url.split('worksheetId=')[1].split('&')[0]
 		loading()
