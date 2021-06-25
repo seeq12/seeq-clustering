@@ -361,7 +361,7 @@ class GUI():
 		return
 		
 
-	def loadApp(wkb, wks, api_url, auth_token, quiet):
+	def loadApp(self, wkb, wks, api_url, auth_token, quiet):
 		global app, signals, _cluster_time, decisionType
 		
 		decisionType = None
