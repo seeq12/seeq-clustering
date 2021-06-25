@@ -1,7 +1,21 @@
 import pandas as pd
-import  numpy as np
+import numpy as np
 import pickle
 import secrets
+import datetime
+import warnings
+
+import IPython
+from IPython.display import clear_output
+
+from ipywidgets import widgets
+from ipywidgets import HTML
+from ipywidgets import Layout, Text
+from ipywidgets import VBox, HBox
+from ipywidgets import Image, Checkbox
+
+from .display import loading
+from .ui import checksum, selectType, clusterUnsupervised, clusterSupervised, startSupervised
 
 from .. import seeqInterface
 from .. import historicalBenchmarking
@@ -22,12 +36,12 @@ def push_clusterer_definition_to_seeq_property(serialized_definition, unique_key
 
 	"""
 	data = pd.DataFrame({
-	    'Name':['EKPPropertyStorage{}'.format(unique_key)],
-	    'Capsule Start':[pd.Timestamp("10/31/1993")], 
-	    'Capsule End': [pd.Timestamp("11/1/1993")],
-	    'clusterDefn': ['{}'.format(serialized_definition)],
-	    'Type':['Condition'],
-	    'Maximum Duration':['1day']
+		'Name':['EKPPropertyStorage{}'.format(unique_key)],
+		'Capsule Start':[pd.Timestamp("10/31/1993")], 
+		'Capsule End': [pd.Timestamp("11/1/1993")],
+		'clusterDefn': ['{}'.format(serialized_definition)],
+		'Type':['Condition'],
+		'Maximum Duration':['1day']
 	})
 
 	pushed_ID = seeqInterface.push_capsule(data)
@@ -171,9 +185,9 @@ class App():
 			seeq_dollarsign_ids = []
 			j = 0 #multiplier duplicate count of letters
 			for i in range(len(conditioners)):
-			    if np.mod(i,26) == 0:
-			        j+=1
-			    seeq_dollarsign_ids.append(alphabet[np.mod(i, 26)]*j)
+				if np.mod(i,26) == 0:
+					j+=1
+				seeq_dollarsign_ids.append(alphabet[np.mod(i, 26)]*j)
 
 			insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
 			for dollarsign_id in seeq_dollarsign_ids:
@@ -247,3 +261,238 @@ class App():
 
 
 
+class GUI():
+
+
+	def __init__(url, auth_token):
+		#worsheet id
+		wks = url.split('worksheetId=')[1].split('&')[0]
+		loading()
+
+		#worbook id
+		wkb = url.split('workbookId=')[1].split('&')[0]
+
+		#fix formatting
+		wkb = wkb.replace('"', '')
+		wks = wks.replace('"', '')
+
+		#url for api
+		api_url = url.split('data-lab')[0]
+		self.wks = wks
+		self.wkb = wkb
+		self.api_url = api_url
+		self.auth_token = auth_token
+
+
+		### Styling ###
+		_layout = Layout(flex='1 1 auto', width='99%')
+		_widget_style = {'description_width': '150px'}
+
+		self._layout = _layout
+		self._widget_style = _widget_style
+
+	### Clicking Functions ###
+
+	def selectUnsupervised(*args):
+		global decisionType
+		decisionType = 'unsupervised'
+		selectType(widgetDisplayUnsupervised, buttonSelectSupervised, buttonSelectUnsupervised,)
+		return
+
+	def selectSupervised(*args):
+		global decisionType
+		decisionType = 'supervised'
+		selectType(widgetDisplaySupervised, buttonSelectSupervised, buttonSelectUnsupervised,)
+		return
+
+	def uiClusterUnsupervised(*args):
+		#will be closed
+		buttons = [buttonSelectSupervised, buttonSelectUnsupervised, buttonClusterUnsupervised]
+		clusterUnsupervised(
+			app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, 
+			_cluster_name.value, _cluster_time.value
+		)
+		return
+	def uiStartSupervised(*args):
+		buttons = [buttonSelectSupervised, buttonSelectUnsupervised, buttonStartSupervised, xsignal, ysignal]
+		
+		global hist_grid_points
+		global datadf
+		
+		datadf, hist_grid_points = startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised)
+		return
+
+	def uiClusterSupervised(*args):
+		buttons = [buttonClusterSupervised]
+		try:
+			test = indexofselection
+		except NameError:
+			print('SELECTION ERROR. Please make a selection with the lasso tool first.')
+			return
+		clusterSupervised(
+			app, buttons, xsignal, ysignal, clusterExtent, 
+			datadf, indexofselection, hist_grid_points, 
+			_cluster_name.value, _cluster_time.value
+		)
+		return
+
+
+	### App functions ###
+	#load the App
+	def loadWorksheet(wkb, wks, api_url, auth_token, quiet):
+		app = App(wkb, wks, api_url, auth_token, quiet = quiet)
+		now = datetime.datetime.now()
+		now_str = now.strftime("%m/%d/%Y, %H:%M:%S")
+		return app, now_str
+
+	def reload(*args):
+		if decisionType == None:
+			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
+			return
+		elif decisionType == 'supervised':
+			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
+			selectSupervised()
+			return
+		elif decisionType == 'unsupervised':
+			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
+			selectUnsupervised()
+			return
+		
+		return
+		
+
+	def loadApp(wkb, wks, api_url, auth_token, quiet):
+		global app, signals, _cluster_time, decisionType
+		
+		decisionType = None
+		
+		clear_output()
+		app, now_str = loadWorksheet(wkb, wks, api_url, auth_token, quiet = quiet)
+		signals = app.signals.Name.values
+		clear_output()
+		
+		global xsignal, ysignal, minClusterSize, percentOfData, _cluster_name
+		global exactBox, buttonClusterUnsupervised, buttonSelectSupervised
+		global buttonSelectUnsupervised, buttonStartSupervised, buttonClusterSupervised
+		global widgetDisplayUnsupervised, widgetDisplaySupervised, clusterExtent
+		
+		#Seeq logo
+		logo = HTML(
+			"<img src='https://www.seeq.com/sites/default/files/Seeq_Logo_PMS%20close%20crop_0.png' width=100px>"
+		)
+
+		_under_logo = HTML('<h3>Scatterplot Clustering</h3>')
+
+		### Buttons and Widgets ###
+		_cluster_name = Text(
+			value='Cluster',
+			placeholder='Type an informative base name',
+			description='Basename: ',
+			disabled=False,
+			layout=Layout(flex='1 1 auto', width='40%'),
+			style={'description_width': '80px'}       
+		)
+
+		_cluster_time = Text(
+			value=now_str,
+			placeholder='Unique identifier',
+			description='Time: ',
+			disabled=True,
+			layout=Layout(flex='1 1 auto', width='40%'),
+			style={'description_width': '30px'}    
+		)
+		
+		_working = widgets.Output()
+
+		xsignal = widgets.Dropdown(
+			description="x Signal",
+			options=signals,
+			value=signals[0],
+			layout=self._layout,
+			style=self._widget_style                    
+		)
+
+		ysignal = widgets.Dropdown(
+			description='y Signal',
+			options=signals,
+			value=signals[1],
+			layout=self._layout,
+			style=self._widget_style
+		)
+
+		minClusterSize = widgets.Text(
+			description='Min Cluster Points',
+			value='200',
+			layout=self._layout,
+			style=self._widget_style
+		)
+
+		percentOfData = widgets.Text(
+			description='Percent of Data (%)',
+			value='5',
+			layout=self._layout,
+			style=self._widget_style
+		)
+
+		clusterExtent = widgets.Text(
+			descripction='Cluster Extent',
+			value='1',
+			layout=self._layout,
+			style=self._widget_style
+		)
+
+		exactBox = Checkbox(False, description='Ignore Percent of Data?')
+
+		buttonClusterUnsupervised = widgets.Button(description="Cluster", layout=self._layout)
+		buttonSelectSupervised = widgets.Button(description="Visual (Supervised)", layout=self._layout)
+		buttonSelectUnsupervised = widgets.Button(description="Density (Unsupervised)", layout=self._layout)
+		buttonStartSupervised = widgets.Button(description="Start Selection", layout=self._layout)
+		buttonClusterSupervised = widgets.Button(description="Define Cluster", layout=self._layout)
+		_reload = widgets.Button(description="Reload from Seeq", 
+								 layout=Layout(flex='1 1 auto', width='20%'),
+								 button_style = 'info'
+								)
+
+		#Choice of Supervised or Unsupervised:
+		typeSelection = [
+			buttonSelectSupervised,
+			buttonSelectUnsupervised
+		]
+
+		widgetDisplayUnsupervised = [
+			HTML("""<div>
+			<h4>Cluster Definition:</h4>
+				 <p>Minimum number of points to classify a cluster. Use Larger of:</p>
+				 </div>"""),
+			percentOfData,
+			minClusterSize,
+			exactBox,
+			HTML("""<div><h4>Cluster Extent:</h4>
+				 <p>Adjust cluster boundary length<p/></div>
+				 """),
+			clusterExtent,
+			buttonClusterUnsupervised
+		]
+
+		widgetDisplaySupervised = [
+			xsignal, 
+			ysignal, 
+			buttonStartSupervised
+		]
+		
+		buttonSelectSupervised.on_click(selectSupervised)
+		buttonSelectUnsupervised.on_click(selectUnsupervised)
+		buttonClusterUnsupervised.on_click(uiClusterUnsupervised)
+		buttonStartSupervised.on_click(uiStartSupervised)
+		buttonClusterSupervised.on_click(uiClusterSupervised)
+		_reload.on_click(reload)
+
+		display(VBox([HBox([logo,_working]),
+					  HBox([_under_logo]), HBox([_reload])]), 
+				HBox([_cluster_name, _cluster_time]),
+				HBox(typeSelection))
+		
+		return
+
+	def run():
+		self.loadApp(self.wkb, self.wks, self.api_url, self.auth_token, quiet = True)
