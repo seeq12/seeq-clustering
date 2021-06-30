@@ -16,12 +16,10 @@ from bokeh.resources import INLINE
 from bokeh.palettes import Viridis, Blues
 import itertools
 
+from .checksum import checksum
+
 __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', 'startSupervised')
 
-with open("checksum.json") as json_data_file:
-    data = json.load(json_data_file)
-    checksum = data['checksum']
-    
 
 def clear():
     os.system( 'cls' )
