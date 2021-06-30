@@ -5,6 +5,7 @@ import sys
 import os
 import numpy as np
 import IPython
+import json
 
 from .. import seeqInterface
 
@@ -17,7 +18,10 @@ import itertools
 
 __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', 'startSupervised')
 
-checksum = 'Clustering.py:NUMERIC:PnA685UExBag'
+with open("checksum.json") as json_data_file:
+    data = json.load(json_data_file)
+    checksum = data['checksum']
+    
 
 def clear():
     os.system( 'cls' )
