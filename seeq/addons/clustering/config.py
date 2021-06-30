@@ -9,6 +9,8 @@ def checksum(checksum):
 
 if __name__ == '__main__':
     try:
+        if sys.argv[1] != 'checksum':
+            raise ValueError('Incorrect configuration function specified. Options are "checksum"')
         globals()[sys.argv[1]](sys.argv[2])
     except IndexError:
         if len(sys.argv) == 1:

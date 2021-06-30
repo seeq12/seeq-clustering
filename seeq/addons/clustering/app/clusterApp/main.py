@@ -196,7 +196,7 @@ class App():
 
 			#TODO: finish up formula
 			formula_string = "externalCalculation('{}', '{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
-			formula = formula_string.format(checksum, self.api_url, key, self.clusterer_seeq_id, clustern, self.grid)
+			formula = formula_string.format(checksum, self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
 			#print(formula)
 			
 			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
