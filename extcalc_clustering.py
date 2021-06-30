@@ -86,7 +86,7 @@ def cluster_check(check_points, model):
 		return contour_check(check_points, model[0])[0] #returned list should only have one item
 
 
-class ClusterCapsule4(KeywiseExternalCalculationScript):
+class extcalc_clustering(KeywiseExternalCalculationScript):
 
 	def initialize(self):
 		self.model = False

@@ -17,7 +17,7 @@ import itertools
 
 __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', 'startSupervised')
 
-checksum = 'ClusterCapsule4.py:NUMERIC:cIcVv0Gi5qIc'
+checksum = 'Clustering.py:NUMERIC:PnA685UExBag'
 
 def clear():
     os.system( 'cls' )
