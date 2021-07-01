@@ -93,12 +93,13 @@ class App():
 		if type(datadf) == type(None):
 			#case for doing density based (hdbscan)
 
-			query_str = ""
-			for sig in signal_list:
-				query_str += "Name == '{}' or ".format(sig)
-			query = query_str[:-4] #delete "or" from the end
+			for i, sig in enumerate(signal_list):
+				if i == 0:
+					indexer = (self.signals['Name'] == sig).values
+				else:
+					indexer = indexer + ((self.signals['Name'] == sig).values)
 			
-			to_pull = self.signals.query(query)
+			to_pull = self.signals[indexer]
 
 			datadf = seeqInterface.get_signals_samples(
 					to_pull, 
