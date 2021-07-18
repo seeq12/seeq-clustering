@@ -346,17 +346,17 @@ class GUI():
 		now_str = now.strftime("%m/%d/%Y, %H:%M:%S")
 		return app, now_str
 
-	def reload(*args):
+	def reload(self, *args):
 		if decisionType == None:
-			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
+			self.loadApp(self.wkb, self.wks, self.api_url, self.auth_token, quiet = True)
 			return
 		elif decisionType == 'supervised':
-			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
-			selectSupervised()
+			self.loadApp(self.wkb, self.wks, self.api_url, self.auth_token, quiet = True)
+			self.selectSupervised()
 			return
 		elif decisionType == 'unsupervised':
-			self.loadApp(wkb, wks, api_url, auth_token, quiet = True)
-			selectUnsupervised()
+			self.loadApp(self.wkb, self.wks, self.api_url, self.auth_token, quiet = True)
+			self.selectUnsupervised()
 			return
 		
 		return
