@@ -39,10 +39,10 @@ You may also wish to store your models elsewhere. Assuming you have permissions 
 7. Ensure that add on tools are enabled in your version of Seeq. For instructions on how to do this, see 
 [here](https://seeq.atlassian.net/wiki/spaces/KB/pages/961675391/Add-on+Tool+Administration+and+Development#Add-on-Tools-appear-in-an-%E2%80%9CAdd-ons%E2%80%9D-group-on-the-Seeq-Tools-panel.-These-tools-typically-open-an-appmode-SDL-notebook)
 
-8. Note the URL of your Seeq Server instance, then run the following command in SDL terminal
+8. Note the URL of your Seeq Server instance (e.g. https://my.seeq.com/), and the URL of your Clustering app notebook (e.g. https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb) then run the following command in SDL terminal
 
 ```bash
-python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url>
+python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url> --app_url <app_notebook_url>
 ```
 
  - Options on install:

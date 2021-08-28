@@ -9,6 +9,8 @@ def install_interface():
                         help='Username or Access Key of Seeq admin user installing the tool(s) ')
     parser.add_argument('--seeq_url', type=str,
                         help="Seeq hostname URL with the format https://my.seeq.com/ or https://my.seeq.com:34216")
+    parser.add_argument('--app_url', type=str,
+                        help="URL of clustering app notebook with the format e.g. https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb")
     parser.add_argument('--users', type=str, nargs='*', default=[],
                         help="List of the Seeq users to will have access to the Correlation Add-on Tool,"
                              " default: %(default)s")
@@ -77,7 +79,7 @@ def add_datalab_project_ace(data_lab_project_id, ace_input, items_api):
         except Exception as error:
             print_red(error.body)
 
-def get_tool_config(sort_key=None, permissions_group: list = None, permissions_users: list = None):
+def get_tool_config(app_url, sort_key=None, permissions_group: list = None, permissions_users: list = None):
     """
     Return a configuration dict for the Clustering Addon tool.
 
@@ -107,7 +109,7 @@ def get_tool_config(sort_key=None, permissions_group: list = None, permissions_u
         name='Open-Source Test (Google)',
         description="Testing Install of External Tools",
         iconClass="fa fa-th",
-        targetUrl=f'https://www.google.com/',
+        targetUrl=f'{}'.format(app_url),
         linkType="window",
         windowDetails="toolbar=0,location=0,left=800,top=400,height=1000,width=1400",
         sortKey=sort_key,
@@ -117,8 +119,14 @@ def get_tool_config(sort_key=None, permissions_group: list = None, permissions_u
     )
     return my_tool_config
 
+def sanitize_app_url(url):
+    if 'notebooks' in url:
+        return url.replace('notebooks', 'apps')
+    if 'apps' not in url:
+        raise ValueError('app_url is malformed.')
 
-def install_addon(seeq_url, *, sort_key=None, permissions_group: list = None, permissions_users: list = None, username = None, password = None):
+
+def install_addon(seeq_url, app_url, *, sort_key=None, permissions_group: list = None, permissions_users: list = None, username = None, password = None, ignore_ssl_errors = True):
     """
     Install as an Add-on Tool in Seeq Workbench
 
@@ -127,6 +135,9 @@ def install_addon(seeq_url, *, sort_key=None, permissions_group: list = None, pe
     seeq_url: str
         URL of the Seeq Server.
         E.g. https://my.seeq.com/
+    app_url: str
+        URL of Clustering App Jupyter Notebook. 
+        E.g. https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb
     sort_key: str, default None
         A string, typically one character letter. The sort_key determines the
         order in which the Add-on Tools are displayed in the tool panel
@@ -145,7 +156,7 @@ def install_addon(seeq_url, *, sort_key=None, permissions_group: list = None, pe
         Workbench
     """
     if spy.client == None:
-        spy.login(username=username, password=password, url=seeq_url)
+        spy.login(username=username, password=password, url=seeq_url, ignore_ssl_errors=ignore_ssl_errors)
 
     system_api = sdk.SystemApi(spy.client)
     users_api = sdk.UsersApi(spy.client)
@@ -185,7 +196,8 @@ def install_addon(seeq_url, *, sort_key=None, permissions_group: list = None, pe
                 tools_config[-1]["permissions"]["groups"].append(identity.name)
 
     #get config of tool to add or update:
-    my_tool_config = get_tool_config(sort_key=sort_key, permissions_group=permissions_group, permissions_users=permissions_users)
+    app_url = sanitize_app_url(app_url)
+    my_tool_config = get_tool_config(app_url, sort_key=sort_key, permissions_group=permissions_group, permissions_users=permissions_users)
 
     # If the tool is in the list, update it
     if my_tool_config["name"] in [t["name"] for t in tools_config]:
@@ -257,7 +269,7 @@ def install_addon(seeq_url, *, sort_key=None, permissions_group: list = None, pe
 if __name__ == '__main__':
     args = install_interface()
 
-    install_addon(args.seeq_url,
+    install_addon(args.seeq_url, args.app_url
         sort_key = args.sort_key, 
         permissions_group = args.groups, 
         permissions_users = args.users, 
