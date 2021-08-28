@@ -45,4 +45,4 @@ You may also wish to store your models elsewhere. Assuming you have permissions 
 python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url>
 ```
 
-	a. Options on install:
+a. Options on install:
