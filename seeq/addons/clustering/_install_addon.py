@@ -269,7 +269,7 @@ def install_addon(seeq_url, app_url, *, sort_key=None, permissions_group: list =
 if __name__ == '__main__':
     args = install_interface()
 
-    install_addon(args.seeq_url, args.app_url
+    install_addon(args.seeq_url, args.app_url,
         sort_key = args.sort_key, 
         permissions_group = args.groups, 
         permissions_users = args.users, 

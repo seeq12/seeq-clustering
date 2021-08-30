@@ -7,7 +7,7 @@
 
 **Ensure the next 4 steps are done in the correct order**
 
-3. In command line on the computer or server running Seeq, navigate to the external calculation python folder (using the example from above):
+3. In command line on the computer or server running Seeq (*not* seeq data lab terminal), navigate to the external calculation python folder (using the example from above):
 ```bash
 > cd D:/Seeq/plugins/external-calculation/python/user/
 ```
