@@ -106,8 +106,8 @@ def get_tool_config(app_url, sort_key=None, permissions_group: list = None, perm
         sort_key = 'a'
 
     my_tool_config = dict(
-        name='Open-Source Test (Google)',
-        description="Testing Install of External Tools",
+        name='Clustering',
+        description="Density based clustering tool.",
         iconClass="fa fa-th",
         targetUrl='{}'.format(app_url),
         linkType="window",
