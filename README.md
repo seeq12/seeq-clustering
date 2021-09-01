@@ -17,6 +17,8 @@
 > python _Clustering_config.py clusteringModelsPath
 ```
 
+The default is to store the models in the same location as where Clustering.py lives. 
+
 You may also wish to store your models elsewhere. Assuming you have permissions to access the path, this can be done as:
 
 ```bash
@@ -43,7 +45,7 @@ If you are unable to run `_Clustering_config.py` (e.g. if you do not have python
 
 		To install your own Python libraries, run in this window (seeqprompt window) the following command:
 
-		```bash
+		```
 		> python -m pip install hdbscan -t plugins\lib\python3
 		```
 		where hdbscan is the name of the module we wish to install.
@@ -102,7 +104,18 @@ where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server a
 
 # Manual external-calc Clustering Config
 
-Todo
+To manually update the cluster model path, open `Clustering.py` in a text editor. The top two lines should be:
+
+```
+#DO NOT CHANGE THE FOLLOWING LINE OR THIS LINE
+wkdir = ''
+```
+
+Manually enter the path where you wish to save the clustering models by updating the wkdir variable (yes, this means ignoring the warning in the first line and YES change line 2. To replicate default behavior, updated `wkdir` to be the same **absolute** path as the directory which holds `Clustering.py`, e.g.:
+
+```
+wkdir = 'D:/Seeq/plugins/external-calculation/python/user/'
+```
 
 # Errors in hdbscan ext-calc install
 
