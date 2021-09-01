@@ -1,5 +1,5 @@
 #DO NOT CHANGE THE FOLLOWING LINE OR THIS LINE
-wkdir = 'C:/Users/epars/OneDrive/Documents/Seeq_local/development/hb/seeq/addons/clustering'
+wkdir = ''
 
 from extcalc import KeywiseExternalCalculationScript
 import numpy as np
