@@ -60,7 +60,15 @@ Once you've finished these steps the newly installed module may be used in your 
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-5. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, then in your Clustering SDL, open an SDL terminal and navigate to `clustering` directory:
+5. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, then in your Clustering SDL
+
+![alt text](https://github.com/eparsonnet93/hb/blob/open-source/images/checksum_from_dropdown.png?raw=true)
+
+<p align="center">
+  <img src="./images/checksum_from_dropdown.png" width="350" title="hover text">
+</p>
+
+open an SDL terminal and navigate to `clustering` directory:
 
 ```bash
 > cd ./hb/seeq/addons/clustering/
@@ -73,8 +81,6 @@ If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbs
 ```
 
 where `<yourchecksumhere>` is from Seeq Workbench. Here is an example: `Clustering.py:NUMERIC:q2tYWyXR+cw7`
-
-![alt text](https://github.com/eparsonnet93/hb/blob/open-source/images/checksum_from_dropdown.png?raw=true)
 
 7. Install the necessary requirements:
 
