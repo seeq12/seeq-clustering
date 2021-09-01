@@ -27,7 +27,7 @@ If you are unable to run `_Clustering_config.py` (e.g. if you do not have python
 
 ### Install hdbscan for external-calc
 
-7. Follow the instructions in external-calc readme, typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html` to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
+5. Follow the instructions in external-calc readme, typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html` to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
 
 ```
 Installation of additional libraries can be done by executing the following steps:
@@ -60,21 +60,19 @@ Once you've finished these steps the newly installed module may be used in your 
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-5. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, then in your Clustering SDL
-
-![alt text](https://github.com/eparsonnet93/hb/blob/open-source/images/checksum_from_dropdown.png?raw=true)
+6. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up:
 
 <p align="center">
   <img src="./images/checksum_from_dropdown.png" width="350" title="hover text">
 </p>
 
-open an SDL terminal and navigate to `clustering` directory:
+then in your Clustering SDL, open an SDL terminal and navigate to `clustering` directory:
 
 ```bash
 > cd ./hb/seeq/addons/clustering/
 ```
 
-6. Run the following command to update your instance of clustering to point to your instance of the external calc script:
+7. Run the following command to update your instance of clustering to point to your instance of the external calc script:
 
 ```bash
 > python config checksum <yourchecksumhere>
@@ -82,25 +80,50 @@ open an SDL terminal and navigate to `clustering` directory:
 
 where `<yourchecksumhere>` is from Seeq Workbench. Here is an example: `Clustering.py:NUMERIC:q2tYWyXR+cw7`
 
-7. Install the necessary requirements:
+8. Install the necessary requirements in SDL: (we need hdbscan here too)
 
 ```bash
 pip install hdbscan
 ```
 
-7. Ensure that add on tools are enabled in your version of Seeq. For instructions on how to do this, see 
+9. Ensure that add-on tools are enabled in your version of Seeq. For instructions on how to do this, see 
 [here](https://seeq.atlassian.net/wiki/spaces/KB/pages/961675391/Add-on+Tool+Administration+and+Development#Add-on-Tools-appear-in-an-%E2%80%9CAdd-ons%E2%80%9D-group-on-the-Seeq-Tools-panel.-These-tools-typically-open-an-appmode-SDL-notebook)
 
-8. Note the URL of your Seeq Server instance (e.g. https://my.seeq.com/), and the URL of your Clustering app notebook (e.g. https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb) then run the following command in SDL terminal
+10. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering app notebook (e.g. `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb`) then run the following command in SDL terminal
 
 ```bash
 python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url> --app_url <app_notebook_url>
 ```
 
+where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server and specific url for the clustering App notebook, respectively.
+
  - Options on install:
+ 
+ Todo
 
 
 # Manual external-calc Clustering Config
 
+Todo
+
 # Errors in hdbscan ext-calc install
+
+If you encounter the error 
+```
+error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools": https://visualstudio.microsoft.com/visual-cpp-build-tools/
+  ----------------------------------------
+  ERROR: Failed building wheel for hdbscan
+Failed to build hdbscan
+ERROR: Could not build wheels for hdbscan which use PEP 517 and cannot be installed directly
+```
+
+simply follow the link provided in the error (https://visualstudio.microsoft.com/visual-cpp-build-tools/) and download and install Microsoft C++ Build Tools. Follow the download instructions and install the defaults for Microsoft C++ Build Tools:
+
+<p align="center">
+  <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
+  <img src="./images/cpp_install_2.png" width="350" title="Install defaults">
+</p>
+
+You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#install-hdbscan-for-external-calc))
+
 
