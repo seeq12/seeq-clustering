@@ -61,7 +61,7 @@ If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbs
 6. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up:
 
 <p align="center">
-  <img src="./images/checksum_from_dropdown.png" width="350" title="hover text">
+  <img src="./images/checksum_from_dropdown.png" width="350" title="checksum location">
 </p>
 
 then in your Clustering SDL, open an SDL terminal and navigate to `clustering` directory:
@@ -118,10 +118,10 @@ ERROR: Could not build wheels for hdbscan which use PEP 517 and cannot be instal
 simply follow the link provided in the error (https://visualstudio.microsoft.com/visual-cpp-build-tools/) and download and install Microsoft C++ Build Tools. Follow the download instructions and install the defaults for Microsoft C++ Build Tools:
 
 <p align="center">
-  <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
+  <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools" href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">
 </p>
-<p>
-  <img src="./images/cpp_install_2.png" width="350" title="Install defaults">
+<p align = "center">
+  <img src="./images/cpp_install_2.png" width="600" title="Install defaults">
 </p>
 
 You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#install-hdbscan-for-external-calc))
