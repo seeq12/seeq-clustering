@@ -29,34 +29,32 @@ If you are unable to run `_Clustering_config.py` (e.g. if you do not have python
 
 5. Follow the instructions in external-calc readme, typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html` to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
 
-```
 Installation of additional libraries can be done by executing the following steps:
 
-Stop Seeq if already started
+**Stop Seeq if already started**
 
 You may stop seeq by using the Seeq Workbench.
 
-Install the new Python module(s)
+**Install the new Python module(s)**
 
-Go to the place where Seeq Server is installed (usually C:\Program Files\Seeq Server) and run seeqprompt.bat
+Go to the place where Seeq Server is installed (usually C:\Program Files\Seeq Server) and run `seeqprompt.bat`
 
 This will open a new cmd window and will setup the Python environment for the next commands.
 
 To install your own Python libraries, run in this window (seeqprompt window) the following command:
 
-python -m pip install hdbscan -t plugins\lib\python3
-
+```bash
+> python -m pip install hdbscan -t plugins\lib\python3
+```
 where hdbscan is the name of the module we wish to install.
 
-Check and repair permissions
+**Check and repair permissions**
 
 If you run seeq as a service you will need to go to c:\ProgramData\Seeq\data\plugins\lib, select python3 folder, press right mouse, go to Properties , select Security tab, press Advanced, mark checkbox "Replace all child object permissions ..." press Apply, then Yes and then OK.
 
-Start Seeq
+**Start Seeq**
 
 Once you've finished these steps the newly installed module may be used in your external-calculation Python scripts.
-
-```
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
@@ -121,6 +119,8 @@ simply follow the link provided in the error (https://visualstudio.microsoft.com
 
 <p align="center">
   <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
+</p>
+<p>
   <img src="./images/cpp_install_2.png" width="350" title="Install defaults">
 </p>
 
