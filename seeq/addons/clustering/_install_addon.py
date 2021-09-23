@@ -109,7 +109,7 @@ def get_tool_config(app_url, sort_key=None, permissions_group: list = None, perm
         name='Clustering',
         description="Density based clustering tool.",
         iconClass="fa fa-th",
-        targetUrl='{}?workbookId={{workbookId}}&worksheetId={{worksheetId}}'.format(app_url)
+        targetUrl='{}?workbookId={{workbookId}}&worksheetId={{worksheetId}}'.format(app_url),
         linkType="window",
         windowDetails="toolbar=0,location=0,left=800,top=400,height=1000,width=1400",
         sortKey=sort_key,
