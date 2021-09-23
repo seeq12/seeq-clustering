@@ -27,6 +27,9 @@ def get_signals(worksheet):
 	"""
 	display_items = worksheet.display_items
 
+	if len(display_items) == 0:
+		raise ValueError('No items (signals, conditions, etc) are displayed in this worksheet.')
+
 	return display_items.query("Type == 'Signal'")
 
 def get_conditions(worksheet):
@@ -40,6 +43,10 @@ def get_conditions(worksheet):
 		conditions (pandas.DataFrame): Displayed Conditions
 	"""
 	display_items = worksheet.display_items
+
+	if len(display_items) == 0:
+		raise ValueError('No items (signals, conditions, etc) are displayed in this worksheet.')
+
 	return display_items.query("Type == 'Condition'")
 
 
