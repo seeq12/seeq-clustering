@@ -1,9 +1,11 @@
 import sys
 
 def checksum(checksum):
+    print('Updating checksum to {}'.format(checksum))
     f = open( './app/clusterApp/checksum.py', 'w' )
     f.write( 'checksum = ' + repr(checksum) + '\n' )
     f.close()
+    print('done.')
     return
 
 

@@ -60,7 +60,7 @@ If you are unable to run `_Clustering_config.py` (e.g. if you do not have python
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-6. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up:
+6. In Seeq Workbench retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`:
 
 <p align="center">
   <img src="./seeq/addons/clustering/images/checksum_from_dropdown.png" width="350" title="checksum location">
@@ -75,7 +75,7 @@ then in your Clustering SDL, open an SDL terminal and navigate to `clustering` d
 7. Run the following command to update your instance of clustering to point to your instance of the external calc script:
 
 ```bash
-> python config checksum <yourchecksumhere>
+> python _config checksum <yourchecksumhere>
 ```
 
 where `<yourchecksumhere>` is from Seeq Workbench. Here is an example: `Clustering.py:NUMERIC:q2tYWyXR+cw7`
@@ -143,4 +143,14 @@ simply follow the link provided in the error (https://visualstudio.microsoft.com
 
 You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#install-hdbscan-for-external-calc))
 
+# Clustering checksum doesn't show in Seeq
 
+If you had to do [manually setup for clustering config](#errors-in-hdbscan-ext-calc-install), ensure that no '\' were used in the absolute path. Replace with '/'.
+
+Ensure you are using the correct path `~/external-calculation/python/user/` for your instance of Seeq that is currently running. 
+
+You may have to [install seeq](https://pypi.org/project/seeq/) for external calc. See instructions [above](#Install-hdbscan-for-external-calc)
+
+# Updating 
+
+If you update the external calc code for any reason (maybe change model storage location for example), a new, unique checksum will be generated. You must reconfigure the app in this scenario by following [these steps above](#Run-the-following-command-to-update-your-instance-of-clustering-to-point-to-your-instance-of-the-external-calc-script)
