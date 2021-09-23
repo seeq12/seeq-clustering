@@ -27,36 +27,36 @@ You may also wish to store your models elsewhere. Assuming you have permissions 
 
 If you are unable to run `_Clustering_config.py` (e.g. if you do not have python installed), see [manual instructions](#manual-external-calc-clustering-config)
 
-### Install hdbscan for external-calc
+### (pip) Install hdbscan for external-calc
 
 5. Follow the instructions in external-calc readme, typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html` to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
 
-		Installation of additional libraries can be done by executing the following steps:
+	Installation of additional libraries can be done by executing the following steps:
 
-		**Stop Seeq if already started**
+	**Stop Seeq if already started**
 
-		You may stop seeq by using the Seeq Workbench.
+	You may stop seeq by using the Seeq Workbench.
 
-		**Install the new Python module(s)**
+	**Install the new Python module(s)**
 
-		Go to the place where Seeq Server is installed (usually C:\Program Files\Seeq Server) and run `seeqprompt.bat`
+	Go to the place where Seeq Server is installed (usually C:\Program Files\Seeq Server) and run `seeqprompt.bat`
 
-		This will open a new cmd window and will setup the Python environment for the next commands.
+	This will open a new cmd window and will setup the Python environment for the next commands.
 
-		To install your own Python libraries, run in this window (seeqprompt window) the following command:
+	To install your own Python libraries, run in this window (seeqprompt window) the following command:
 
-		```
-		> python -m pip install hdbscan -t plugins\lib\python3
-		```
-		where hdbscan is the name of the module we wish to install.
+	```
+	> python -m pip install hdbscan -t plugins\lib\python3
+	```
+	where hdbscan is the name of the module we wish to install.
 
-		**Check and repair permissions**
+	**Check and repair permissions**
 
-		If you run seeq as a service you will need to go to c:\ProgramData\Seeq\data\plugins\lib, select python3 folder, press right mouse, go to Properties , select Security tab, press Advanced, mark checkbox "Replace all child object permissions ..." press Apply, then Yes and then OK.
+	If you run seeq as a service you will need to go to c:\ProgramData\Seeq\data\plugins\lib, select python3 folder, press right mouse, go to Properties , select Security tab, press Advanced, mark checkbox "Replace all child object permissions ..." press Apply, then Yes and then OK.
 
-		**Start Seeq**
+	**Start Seeq**
 
-		Once you've finished these steps the newly installed module may be used in your external-calculation Python scripts.
+	Once you've finished these steps the newly installed module may be used in your external-calculation Python scripts.
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
@@ -141,7 +141,7 @@ simply follow the link provided in the error (https://visualstudio.microsoft.com
   <img src="./seeq/addons/clustering/images/cpp_install_2.png" width="600" title="Install defaults">
 </p>
 
-You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#install-hdbscan-for-external-calc))
+You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#pip-install-hdbscan-for-external-calc))
 
 # Clustering checksum doesn't show in Seeq
 
