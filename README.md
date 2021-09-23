@@ -66,7 +66,7 @@ If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbs
   <img src="./seeq/addons/clustering/images/checksum_from_dropdown.png" width="350" title="checksum location">
 </p>
 
-then in your Clustering SDL, open an SDL terminal and navigate to `clustering` directory:
+then in your Clustering SDL project navigator, open an SDL terminal and navigate to `clustering` directory:
 
 ```bash
 > cd ./hb/seeq/addons/clustering/
@@ -75,21 +75,21 @@ then in your Clustering SDL, open an SDL terminal and navigate to `clustering` d
 7. Run the following command to update your instance of clustering to point to your instance of the external calc script:
 
 ```bash
-> python _config checksum <yourchecksumhere>
+> python _config.py checksum <yourchecksumhere>
 ```
 
 where `<yourchecksumhere>` is from Seeq Workbench. Here is an example: `Clustering.py:NUMERIC:q2tYWyXR+cw7`
 
-8. Install the necessary requirements in SDL: (we need hdbscan here too)
+8. Next, install the necessary requirements in SDL: (we need hdbscan here too)
 
 ```bash
-pip install hdbscan
+> pip install hdbscan
 ```
 
 9. Ensure that add-on tools are enabled in your version of Seeq. For instructions on how to do this, see 
 [here](https://seeq.atlassian.net/wiki/spaces/KB/pages/961675391/Add-on+Tool+Administration+and+Development#Add-on-Tools-appear-in-an-%E2%80%9CAdd-ons%E2%80%9D-group-on-the-Seeq-Tools-panel.-These-tools-typically-open-an-appmode-SDL-notebook)
 
-10. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering app notebook (e.g. `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb`) then run the following command in SDL terminal in the hb directory.
+10. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering `App.ipynb` notebook (e.g. `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/hb/seeq/addons/clustering/App.ipynb`) then run the following command in SDL terminal in the hb directory.
 
 ```
 cd ~/hb
@@ -101,10 +101,19 @@ python _install_addon.py --username <username> --password <password> --seeq_url 
 
 where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server and specific url for the clustering App notebook, respectively.
 
- - Options on install:
- 
- Todo
+Here is an example:
 
+```bash
+python _install_addon.py --username me@me.com --password mypass --seeq_url https://my.seeq.com/ --app_url https://my.seeq.com/data-lab/6E8C6D21-50BB-4209-8B8D-4B6A8D94E5C2/notebooks/hb/seeq/addons/clustering/App.ipynb
+```
+
+#### Options
+
+Additional installation options include `--users` and `--groups`. These can be used to change permissions for the addon tool. For example to give permission to users `me` and `you` one would use:
+
+```bash
+python _install_addon.py --username me@me.com --password mypass --seeq_url https://my.seeq.com/ --app_url https://my.seeq.com/data-lab/6E8C6D21-50BB-4209-8B8D-4B6A8D94E5C2/notebooks/hb/seeq/addons/clustering/App.ipynb --users me you
+```
 
 # Manual external-calc Clustering Config
 
@@ -151,6 +160,6 @@ Ensure you are using the correct path `~/external-calculation/python/user/` for 
 
 You may have to [install seeq](https://pypi.org/project/seeq/) for external calc. See instructions [above](#pip-Install-hdbscan-for-external-calc)
 
-# Updating 
+# Updating External Calc
 
 If you update the external calc code for any reason (maybe change model storage location for example), a new, unique checksum will be generated. You must reconfigure the app in this scenario by following [these steps above](#Run-the-following-command-to-update-your-instance-of-clustering-to-point-to-your-instance-of-the-external-calc-script)
