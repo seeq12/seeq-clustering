@@ -154,7 +154,7 @@ You will likely then have to close your command prompt, and rerun `seeqprompt.ba
 
 # Clustering checksum doesn't show in Seeq
 
-If you had to do [manually setup for clustering config](#Manual-external-calc-Clustering-Config), ensure that no '\' were used in the absolute path. Replace with '/'.
+If you had to do [manually setup for clustering config](#Manual-external-calc-Clustering-Config), ensure that no `\` were used in the absolute path. Replace with `/`.
 
 Ensure you are using the correct path `~/external-calculation/python/user/` for your instance of Seeq that is currently running. 
 
