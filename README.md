@@ -47,6 +47,7 @@ If you are unable to run `_Clustering_config.py` (e.g. if you do not have python
 
 	```
 	> python -m pip install hdbscan -t plugins\lib\python3
+	### if you need to install additional packages, e.g. seeq, replace hdbscan with <packagename>
 	```
 	where hdbscan is the name of the module we wish to install.
 
