@@ -47,7 +47,39 @@ courtesy to the user, and it does not imply any obligation for support from the 
 4. In command line on the computer or server running Seeq (*not* seeq data lab terminal), navigate to the external calculation python folder (using the example from above): `cd D:/Seeq/plugins/external-calculation/python/user/`
 5. Configure the location (on machine running Seeq Server) where clustering models will be stored. Run `python _Clustering_config.py clusteringModelsPath` The default is to store the models in the same location as dir as Clustering.py, *i.e.* `D:/Seeq/plugins/external-calculation/python/user/` in this example. If you wish to store your models elsewhere, and you have the required permissions Assuming you have permissions to access the path, this can be done by running `python _Clustering_config.py clusteringModelsPath <yourpathhere>`
 
-If you are unable to run `_Clustering_config.py` (e.g. if you do not have python installed on the Seeq server host machine), see [manual instructions](#manual-external-calc-clustering-config)
+If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not have python installed on the Seeq server host machine), see [manual instructions](#manual-external-calc-clustering-config)
+
+6. Follow the instructions in external-calc readme (typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html`) to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
+
+	*Installation of additional libraries can be done by executing the following steps:*
+
+	***Stop Seeq if already started***
+
+	*You may stop seeq by using the Seeq Workbench.*
+
+	***Install the new Python module(s)***
+
+	*Go to the place where Seeq Server is installed (usually C:\Program Files\Seeq Server) and run `seeqprompt.bat`*
+
+	*This will open a new cmd window and will setup the Python environment for the next commands.*
+
+	*To install your own Python libraries, run in this window (seeqprompt window) the following command:*
+
+	```
+	python -m pip install hdbscan -t plugins\lib\python3
+	### if you need to install additional packages, e.g. seeq, replace hdbscan with <packagename>
+	```
+	*where hdbscan is the name of the module we wish to install.*
+
+	***Check and repair permissions***
+
+	*If you run seeq as a service you will need to go to c:\ProgramData\Seeq\data\plugins\lib, select python3 folder, press right mouse, go to Properties , select Security tab, press Advanced, mark checkbox "Replace all child object permissions ..." press Apply, then Yes and then OK.*
+
+	***Start Seeq***
+
+	*Once you've finished these steps the newly installed module may be used in your external-calculation Python scripts.*
+
+If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
 ----
 
