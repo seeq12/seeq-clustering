@@ -87,6 +87,19 @@ When you define a region manually in visual based clustering, the algorithm defi
 
 This allows for a new test point (say, during calculation of Condition) to be compared against the contour points to determine if that new test point is in the cluster or not. Owing to the nature of the random walk, this method is probabilistic and will not capture every member point 100% of the time. This membership definition is only used for visual clustering. 
 
+Pseudo code for deterimining cluster membership:
+
+```
+isinCluster(test_point, contour_points)
+    Find the direction to the test_point from origin of cluster, r'
+    Find the closest direction in the set of contour_points, r
+      and corresponding length L
+     
+    calculate the length along r' to the test_point, L'
+   
+    if L'<L return true, else return false
+```
+
 ----
 
 # Installation
