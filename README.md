@@ -25,6 +25,8 @@ When you open the tool, you will be met with two options:
 
 ## Visual (Supervised)
 
+Visual clustering will only work on 2-dimensional data. You simply define a region, manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
+
 ![N|Scheme](images/visual.PNG)
 
 
@@ -38,7 +40,7 @@ Whichever mode (Visual or Density) you choose, the form of the clusters returned
 
 ### Explanation of Density Based Parameters
 
-**Minimum Cluster Size (mcs)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, which are contain more data each. 
+**Minimum Cluster Size (mcs)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, which are contain more data each. See [examples](#density-based-examples)
 
 - There are two ways to specify mcs. Either by specifying a number (*e.g.* "I want my clusters to contain no fewer that 200 points") or by a percent of the total number of data points (*e.g.* "I want my clusters to contain no less that 5% of the data"). 
 ***note*** *percent of datapoints is calculated based on Display Range.* 
@@ -49,7 +51,11 @@ Whichever mode (Visual or Density) you choose, the form of the clusters returned
 
 You can override the behavior by checking the ``Ignore Percent of data?`` checkbox. Doing so will force `mcs = Min Cluster Points`
 
-**Cluster Extent**
+
+
+#### Density Based Examples
+
+#### How it works (Visual)
 
 ----
 
