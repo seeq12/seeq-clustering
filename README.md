@@ -20,7 +20,31 @@ When you open the tool, you will be met with two options:
 
 ![N|Scheme](images/start.png)
 
-1. 
+1. [Visual (Supervised)](#visual-supervised) - allows you to manually define a cluster boundary in 2-dimensional data
+2. [Density (Unsupervised)](#density-unsupervised) - density based clustering to find clusters in n-dimensional data 
+
+## Visual (Supervised)
+
+![N|Scheme](images/visual.png)
+
+
+## Density (Unsupervised)
+
+See [explanation of density based parameters](#explanation-of-density-based-parameters) for detailed explanations of each input option for cluster definition. 
+
+![N|Scheme](images/density.png)
+
+Whichever mode (Visual or Density) you choose, the form of the clusters returned in Seeq will look similar. Happy clustering!
+
+### Explanation of Density Based Parameter:
+
+**Minimum Cluster Size (mcs)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, which are contain more data each.
+
+1. Percent of data (%) -
+2. Min Cluster Points - 
+3. Ignore Percent of data? - 
+
+**Cluster Extent**
 
 ----
 
