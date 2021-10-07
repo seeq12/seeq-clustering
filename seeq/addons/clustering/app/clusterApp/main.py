@@ -138,7 +138,7 @@ class App():
 		except AttributeError:
 			scalar = 1.25
 		
-		#todo: update scalar to work with cluterer
+		#todo: update scalar to work with clusterer (i.e. allow for zooming in and out on the cluster definition region)
 
 		idlist = [self.signals.query("Name == '{}'".format(conditioner)).ID.values[0] for conditioner in conditioners]
 		

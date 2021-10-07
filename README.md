@@ -44,7 +44,9 @@ Whichever mode (Visual or Density) you choose, the form of the clusters returned
 ***note*** *percent of datapoints is calculated based on Display Range.* 
 - You may (indeed, likely) not know what the total number of datapoints is in your data, so it is recommended to supply both a `Percent of data (%)` and a `Min Cluster Points`. 
 - If both `Percent of data (%)` and `Min Cluster Points` are supplied, the default behavior will be to use the **larger** of the two values for the mcs, *i.e.* 
+
 ![equation](https://latex.codecogs.com/gif.latex?\max\left[\left(&space;\text{Min&space;Cluster&space;Points}\right&space;),\left(&space;\text{Percent&space;of&space;Data&space;(%)}&space;\times&space;\text{Number&space;of&space;datapoints}\right&space;)\right]). 
+
 You can override the behavior by checking the ``Ignore Percent of data?`` checkbox. Doing so will force `mcs = Min Cluster Points`
 
 **Cluster Extent**
