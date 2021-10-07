@@ -310,7 +310,7 @@ class GUI():
 		#will be closed
 		buttons = [buttonSelectSupervised, buttonSelectUnsupervised, buttonClusterUnsupervised]
 		clusterUnsupervised(
-			app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, 
+			app, buttons, signals, minClusterSize, exactBox, percentOfData, 
 			_cluster_name.value, _cluster_time.value
 		)
 		return
@@ -331,7 +331,7 @@ class GUI():
 			print('SELECTION ERROR. Please make a selection with the lasso tool first.')
 			return
 		clusterSupervised(
-			app, buttons, xsignal, ysignal, clusterExtent, 
+			app, buttons, xsignal, ysignal,  
 			datadf, indexofselection, hist_grid_points, 
 			_cluster_name.value, _cluster_time.value
 		)
@@ -375,7 +375,7 @@ class GUI():
 		global xsignal, ysignal, minClusterSize, percentOfData, _cluster_name
 		global exactBox, buttonClusterUnsupervised, buttonSelectSupervised
 		global buttonSelectUnsupervised, buttonStartSupervised, buttonClusterSupervised
-		global widgetDisplayUnsupervised, widgetDisplaySupervised, clusterExtent
+		global widgetDisplayUnsupervised, widgetDisplaySupervised
 		
 		#Seeq logo
 		logo = HTML(
