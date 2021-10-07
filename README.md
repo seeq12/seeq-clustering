@@ -23,11 +23,14 @@ When you open the tool, you will be met with two options:
 1. [Visual (Supervised)](#visual-supervised) - allows you to manually define a cluster boundary in 2-dimensional data
 2. [Density (Unsupervised)](#density-unsupervised) - density based clustering to find clusters in n-dimensional data 
 
+**you may have to refresh the worksheet** once the addon tool says "SUCCESS". If only the conditions are displayed and not the original signals, please simply refresh the page. 
+
 ## Visual (Supervised)
 
 Visual clustering will only work on 2-dimensional data. You simply define a region, manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
 
 ![N|Scheme](images/visual.PNG)
+![N|Scheme](images/visual_result.png)
 
 
 ## Density (Unsupervised)
@@ -35,6 +38,7 @@ Visual clustering will only work on 2-dimensional data. You simply define a regi
 See [explanation of density based parameters](#explanation-of-density-based-parameters) for detailed explanations of each input option for cluster definition. 
 
 ![N|Scheme](images/density.png)
+![N|Scheme](images/density_result.png)
 
 Whichever mode (Visual or Density) you choose, the form of the clusters returned in Seeq will look similar. Happy clustering!
 
@@ -55,7 +59,33 @@ You can override the behavior by checking the ``Ignore Percent of data?`` checkb
 
 #### Density Based Examples
 
+To demonstrate how min cluster size impacts the results on the clustering. We will show here two cases (both with ``Ignore Percent of data?`` checked)
+
+1. `Min Cluster Points = 200`
+
+![N|Scheme](images/density_result.png)
+
+2. `Min Cluster Points = 100`
+
+![N|Scheme](images/density_result_100.png)
+
+##### Errors:
+
+- `ValueError('unable to determine any cluster structure, try reducing mcs, or data size')`
+	No cluster structure was observed. The most likely problem is that the min cluster size (mcs) specified is too large. Try reducing it slightly.
+
 #### How it works (Visual)
+
+When you define a region manually in visual based clustering, the algorithm defines a cluster region as follows:
+1. Selects the data in the Display Range within that region
+2. Finds the center of the selected data
+3. Chooses random directions from the center, traverses along that direction until some threshold (usually 90%) of the selected data is "behind" (along that direction), places a boundary point there. 
+- It also uses the directionality of the walk to specify a "cone" of points which it classifies as "along the walk direction"
+4. Does this for many random walk directions to specify a set of contour points, like that shown here:
+
+![N|Scheme](images/contourpoints.png)
+
+This allows for a new test point (say, during calculation of Condition) to be compared against the contour points to determine if that new test point is in the cluster or not. Owing to the nature of the random walk, this method is probabilistic and will not capture every member point 100% of the time. This membership definition is only used for visual clustering. 
 
 ----
 
