@@ -310,7 +310,7 @@ class GUI():
 		#will be closed
 		buttons = [buttonSelectSupervised, buttonSelectUnsupervised, buttonClusterUnsupervised]
 		clusterUnsupervised(
-			app, buttons, signals, minClusterSize, exactBox, percentOfData, 
+			app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent,
 			_cluster_name.value, _cluster_time.value
 		)
 		return
@@ -372,7 +372,7 @@ class GUI():
 		signals = app.signals.Name.values
 		clear_output()
 		
-		global xsignal, ysignal, minClusterSize, percentOfData, _cluster_name
+		global xsignal, ysignal, minClusterSize, percentOfData, clusterExtent, _cluster_name
 		global exactBox, buttonClusterUnsupervised, buttonSelectSupervised
 		global buttonSelectUnsupervised, buttonStartSupervised, buttonClusterSupervised
 		global widgetDisplayUnsupervised, widgetDisplaySupervised
