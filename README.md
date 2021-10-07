@@ -33,17 +33,17 @@ If you want to install **seeq-clustering** as a Seeq Add-on Tool, you will need:
 - Seeq Data Lab (>= R50.5.0, >=R51.1.0, or >=R52.1.0)
 - `seeq` module whose version matches the Seeq server version
 - Access (and permissions) to machine running Seeq server
-	- Knowledge or where [external calculation](https://seeq.atlassian.net/wiki/spaces/KB/pages/509509833/External+Calculation+Engine) scripts are located on that machine
+	- Knowledge or where [external calculation](https://seeq.atlassian.net/wiki/spaces/KB/pages/509509833/External+Calculation+Engine) scripts are located on that machine (see [User Installation](#user-installation) below)
 - Enable Add-on Tools in the Seeq server
 
-## User Installation (Seeq Data Lab)
+## User Installation
 
 The latest source code of the project can be found [here](https://github.com/seeq12/seeq-clustering). The code is published as a
 courtesy to the user, and it does not imply any obligation for support from the publisher. For proper installation, follow these steps exactly.
 
 1. Create a **new** Seeq Data Lab project and open the **Terminal** window
 2. Clone the seeq-clustering repository, run `git clone https://github.com/seeq12/seeq-clustering.git`
-3. Move two files (cut and paste, or download directly and move) `seeq-clustering/seeq/addons/clustering/Clustering.py` and `seeq-clustering/seeq/addons/clustering/_Clustering_config.py` to the external calculation folder on the machine where Seeq server is running (typically `'D:/Seeq/plugins/external-calculation/python/user/'` or similar)
+3. Move two files (cut and paste, or download directly and move) `Clustering.py` and `_Clustering_config.py` to the external calculation folder on the machine where Seeq server is running (typically `'D:/Seeq/plugins/external-calculation/python/user/'` or similar)
 4. In command line on the computer or server running Seeq (*not* seeq data lab terminal), navigate to the external calculation python folder (using the example from above): `cd D:/Seeq/plugins/external-calculation/python/user/`
 5. Configure the location (on machine running Seeq Server) where clustering models will be stored. Run `python _Clustering_config.py clusteringModelsPath` The default is to store the models in the same location as dir as Clustering.py, *i.e.* `D:/Seeq/plugins/external-calculation/python/user/` in this example. If you wish to store your models elsewhere, and you have the required permissions Assuming you have permissions to access the path, this can be done by running `python _Clustering_config.py clusteringModelsPath <yourpathhere>`
 
