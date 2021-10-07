@@ -471,7 +471,6 @@ class GUI():
 			HTML("""<div><h4>Cluster Extent:</h4>
 				 <p>Adjust cluster boundary length<p/></div>
 				 """),
-			clusterExtent,
 			buttonClusterUnsupervised
 		]
 
