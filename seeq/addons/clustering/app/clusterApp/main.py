@@ -468,9 +468,6 @@ class GUI():
 			percentOfData,
 			minClusterSize,
 			exactBox,
-			HTML("""<div><h4>Cluster Extent:</h4>
-				 <p>Adjust cluster boundary length<p/></div>
-				 """),
 			buttonClusterUnsupervised
 		]
 
