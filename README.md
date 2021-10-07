@@ -82,9 +82,11 @@ If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not ha
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-8. In any Seeq workbook, retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`:
+8. In any Seeq workbook, retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`):
 
-[![N|Scheme](images/checksum_from_dropdown.png)]
+![N|Scheme](images/checksum_from_dropdown.png)
+
+If you the checksum is not appearing see [here](#clustering-checksum-doesnt-show-in-seeq)
 
 9. In your existing Seeq Data Lab **Terminal** window, navigate to `clustering` directory: `cd seeq-clustering/seeq/addons/clustering/`
 
@@ -138,10 +140,10 @@ ERROR: Could not build wheels for hdbscan which use PEP 517 and cannot be instal
 simply follow the link provided in the error (https://visualstudio.microsoft.com/visual-cpp-build-tools/) and download and install Microsoft C++ Build Tools. Follow the download instructions and install the defaults for Microsoft C++ Build Tools:
 
 <p align="center"><a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">
-  <img src="./seeq/addons/clustering/images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
+  <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
 </a></p>
 <p align = "center">
-  <img src="./seeq/addons/clustering/images/cpp_install_2.png" width="600" title="Install defaults">
+  <img src="./images/cpp_install_2.png" width="600" title="Install defaults">
 </p>
 
 You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#pip-install-hdbscan-for-external-calc))
@@ -176,18 +178,6 @@ You can get started by cloning the repository with the command:
 
 ```shell
 git clone git@github.com:seeq12/seeq-clustering.git
-```
-
-## Installation from source
-
-For development work, it is highly recommended creating a python virtual environment and install the package in that
-working environment. If you are not familiar with python virtual environments, you can take a
-look [here](https://docs.python.org/3.8/tutorial/venv.html)
-
-Once your virtual environment is activated, you can install **seeq-clustering** from source with:
-
-```shell
-python setup.py install
 ```
 
 ----
