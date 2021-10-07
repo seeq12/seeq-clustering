@@ -1,6 +1,6 @@
 [![N|Solid](https://www.seeq.com/sites/default/files/seeq-logo-navbar-small.png)](https://www.seeq.com)
 
-[![N|Scheme](seeq/addons/clustering/images/clusters.png)](https://www.seeq.com)
+[![N|Scheme](images/clusters.PNG)](https://www.seeq.com)
 
 ----
 
