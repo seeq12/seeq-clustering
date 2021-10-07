@@ -12,7 +12,15 @@
 
 **seeq-clustering User Guide**
 
-How to use Clustering
+Seeq clustering determines cluster structure in data (either by finding regions of high density, or by manual definition) and returns each cluster as a Seeq condition. This can be useful for determining **regularly visited** regions in parameter space for a set of signals. Why this is important, is best understood by analogy. If you want to know how your car's gas mileage is performing over time, a naive way to monitor it is by recording, at the end of every month, your total number of miles driven and total gas used that month. This will give you a measure of how your gas mileage performs over time **but is it a good measure of how your car is performing?** Gas mileage depends on a variety of factors - outdoor air temperature, number of people in the car, speed *etc* - so a better measure of how your car is performing is by setting some set of parameters (*e.g.* 70 degrees, driving between 25 and 30mph with only 1 person in the car) and calculating your gas mileage **only** when your car is operating in that mode. By examing this, *gas mileage during known conditions*, over time, you have a much better measure of how your car is performing.
+
+This is precisely the aim of the clustering addon. In a real process, it is more complicated than a car, and it is near impossible to know what set of conditions you should use to specify your monitoring periods (*e.g.* the 70 degrees, 1 person, from the car example). Clustering helps you with this. It gives you candidate parameter sets - regions in your data where spends a lot of time - so that you can compare how your process is performing *in a known, and consistent, parameter space*.
+
+When you open the tool, you will be met with two options:
+
+![N|Scheme](images/start.png)
+
+1. 
 
 ----
 
