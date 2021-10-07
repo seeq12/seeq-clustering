@@ -4,13 +4,15 @@
 
 ----
 
-**seeq-clustering** is a Python module to 
+**seeq-clustering** is a plugin for Seeq, which allows for density based clustering of n-dimensional data. Clustering can be supervised (visual) or unsupervised (density based).
 
 ----
 
 # User Guide
 
-[**seeq-clustering User Guide**]()
+**seeq-clustering User Guide**
+
+How to use Clustering
 
 ----
 
@@ -20,7 +22,7 @@ The backend of **seeq-clustering** requires **Python 3.7** or later.
 
 ## Dependencies
 
-See [`requirements.txt`]() file for a list of
+See [`requirements.txt`](https://github.com/seeq12/seeq-clustering/blob/main/requirements.txt) file for a list of
 dependencies and versions. Additionally, you will need to install the `seeq` module with the appropriate version that
 matches your Seeq server. For more information on the `seeq` module see [seeq at pypi](https://pypi.org/project/seeq/)
 
@@ -30,19 +32,22 @@ If you want to install **seeq-clustering** as a Seeq Add-on Tool, you will need:
 
 - Seeq Data Lab (>= R50.5.0, >=R51.1.0, or >=R52.1.0)
 - `seeq` module whose version matches the Seeq server version
-- Seeq administrator access
+- Access (and permissions) to machine running Seeq server
+	- Knowledge or where [external calculation](https://seeq.atlassian.net/wiki/spaces/KB/pages/509509833/External+Calculation+Engine) scripts are located on that machine
 - Enable Add-on Tools in the Seeq server
 
 ## User Installation (Seeq Data Lab)
 
-The latest build of the project can be found [here](https://pypi.seeq.com/) as a wheel file. The file is published as a
-courtesy to the user, and it does not imply any obligation for support from the publisher. Contact
-[Seeq](mailto:applied.research@seeq.com?subject=[seeq-clustering]%20General%20Question) if you required credentials to
-access the site.
+The latest source code of the project can be found [here](https://github.com/seeq12/seeq-clustering). The code is published as a
+courtesy to the user, and it does not imply any obligation for support from the publisher. For proper installation, follow these steps exactly.
 
 1. Create a **new** Seeq Data Lab project and open the **Terminal** window
-2. Run `pip install seeq-clustering --extra-index-url https://pypi.seeq.com --trusted-host pypi.seeq.com`
-3. Run `python -m seeq.addons.correlation [--users <users_list> --groups <groups_list>]`
+2. Clone the seeq-clustering repository, run `git clone https://github.com/seeq12/seeq-clustering.git`
+3. Move two files (cut and paste, or download directly and move) `seeq-clustering/seeq/addons/clustering/Clustering.py` and `seeq-clustering/seeq/addons/clustering/_Clustering_config.py` to the external calculation folder on the machine where Seeq server is running (typically `'D:/Seeq/plugins/external-calculation/python/user/'` or similar)
+4. In command line on the computer or server running Seeq (*not* seeq data lab terminal), navigate to the external calculation python folder (using the example from above): `cd D:/Seeq/plugins/external-calculation/python/user/`
+5. Configure the location (on machine running Seeq Server) where clustering models will be stored. Run `python _Clustering_config.py clusteringModelsPath` The default is to store the models in the same location as dir as Clustering.py, *i.e.* `D:/Seeq/plugins/external-calculation/python/user/` in this example. If you wish to store your models elsewhere, and you have the required permissions Assuming you have permissions to access the path, this can be done by running `python _Clustering_config.py clusteringModelsPath <yourpathhere>`
+
+If you are unable to run `_Clustering_config.py` (e.g. if you do not have python installed on the Seeq server host machine), see [manual instructions](#manual-external-calc-clustering-config)
 
 ----
 
