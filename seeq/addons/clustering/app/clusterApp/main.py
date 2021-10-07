@@ -331,7 +331,7 @@ class GUI():
 			print('SELECTION ERROR. Please make a selection with the lasso tool first.')
 			return
 		clusterSupervised(
-			app, buttons, xsignal, ysignal,  
+			app, buttons, xsignal, ysignal, clusterExtent, 
 			datadf, indexofselection, hist_grid_points, 
 			_cluster_name.value, _cluster_time.value
 		)
