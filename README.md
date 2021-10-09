@@ -27,7 +27,7 @@ When you open the tool, you will be met with two options:
 
 ## Visual (Supervised)
 
-Visual clustering will only work on 2-dimensional data. You simply define a region, manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
+Visual clustering is only applicable to 2-dimensional data. You simply define a region manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
 
 ![N|Scheme](images/visual.PNG)
 ![N|Scheme](images/visual_result.png)
@@ -44,12 +44,12 @@ Whichever mode (Visual or Density) you choose, the form of the clusters returned
 
 ### Explanation of Density Based Parameters
 
-**Minimum Cluster Size (mcs)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, which are contain more data each. See [examples](#density-based-examples)
+**Minimum Cluster Size (MCS)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, each of which then contains more data. See [examples](#density-based-examples)
 
-- There are two ways to specify mcs. Either by specifying a number (*e.g.* "I want my clusters to contain no fewer that 200 points") or by a percent of the total number of data points (*e.g.* "I want my clusters to contain no less that 5% of the data"). 
+- There are two ways to specify MCS. Either by specifying a value (*e.g.* "I want my clusters to contain no fewer that 200 points") or by a percent of the total number of data points (*e.g.* "I want my clusters to contain no less that 5% of the data"). 
 ***note*** *percent of datapoints is calculated based on Display Range.* 
 - You may (indeed, likely) not know what the total number of datapoints is in your data, so it is recommended to supply both a `Percent of data (%)` and a `Min Cluster Points`. 
-- If both `Percent of data (%)` and `Min Cluster Points` are supplied, the default behavior will be to use the **larger** of the two values for the mcs, *i.e.* 
+- If both `Percent of data (%)` and `Min Cluster Points` are supplied, the default behavior will be to use the **larger** of the two values for the MCS, *i.e.* 
 
 ![equation](https://latex.codecogs.com/gif.latex?\max\left[\left(&space;\text{Min&space;Cluster&space;Points}\right&space;),\left(&space;\text{Percent&space;of&space;Data&space;(%)}&space;\times&space;\text{Number&space;of&space;datapoints}\right&space;)\right]). 
 
