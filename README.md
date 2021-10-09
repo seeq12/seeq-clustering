@@ -23,7 +23,7 @@ When you open the tool, you will be met with two options:
 1. [Visual (Supervised)](#visual-supervised) - allows you to manually define a cluster boundary in 2-dimensional data
 2. [Density (Unsupervised)](#density-unsupervised) - density based clustering to find clusters in n-dimensional data 
 
-**you may have to refresh the worksheet** once the addon tool says "SUCCESS". If only the conditions are displayed and not the original signals, please simply refresh the page. 
+**You may have to refresh the worksheet** once the addon tool says "SUCCESS". If only the conditions are displayed and not the original signals, please simply refresh the page. 
 
 ## Visual (Supervised)
 
