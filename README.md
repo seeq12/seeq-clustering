@@ -4,7 +4,7 @@
 
 ----
 
-**seeq-clustering** is a plugin for Seeq, which allows for density based clustering of n-dimensional data. Clustering can be supervised (visual) or unsupervised (density based).
+**seeq-clustering** is an add-on for Seeq, which allows for density based clustering of n-dimensional data. Clustering can be supervised (visual) or unsupervised (density based).
 
 ----
 
