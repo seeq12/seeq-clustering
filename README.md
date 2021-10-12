@@ -72,7 +72,7 @@ To demonstrate how min cluster size impacts the results on the clustering. We wi
 ##### Errors:
 
 - `ValueError('unable to determine any cluster structure, try reducing mcs, or data size')`
-	No cluster structure was observed. The most likely problem is that the min cluster size (mcs) specified is too large. Try reducing it slightly.
+	No cluster structure was observed. The most likely problem is that the min cluster size (MCS) specified is too large or the dataset is too small. Try reducing MCS or increasing the dataset size (*i.e.* Display Range) slightly.
 
 #### How it works (Visual)
 
