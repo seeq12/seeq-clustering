@@ -4,7 +4,7 @@
 
 ----
 
-**seeq-clustering** is a plugin for Seeq, which allows for density based clustering of n-dimensional data. Clustering can be supervised (visual) or unsupervised (density based).
+**seeq-clustering** is an add-on for Seeq Workbench, which allows for density based clustering of n-dimensional data. Clustering can be supervised (visual) or unsupervised (density based).
 
 ----
 
@@ -12,9 +12,9 @@
 
 **seeq-clustering User Guide**
 
-Seeq clustering determines cluster structure in data (either by finding regions of high density, or by manual definition) and returns each cluster as a Seeq condition. This can be useful for determining **regularly visited** regions in parameter space for a set of signals. Why this is important, is best understood by analogy. If you want to know how your car's gas mileage is performing over time, a naive way to monitor it is by recording, at the end of every month, your total number of miles driven and total gas used that month. This will give you a measure of how your gas mileage performs over time **but is it a good measure of how your car is performing?** Gas mileage depends on a variety of factors - outdoor air temperature, number of people in the car, speed *etc* - so a better measure of how your car is performing is by setting some set of parameters (*e.g.* 70 degrees, driving between 25 and 30mph with only 1 person in the car) and calculating your gas mileage **only** when your car is operating in that mode. By examing this, *gas mileage during known conditions*, over time, you have a much better measure of how your car is performing.
+Seeq clustering determines cluster structure in data (either by finding regions of high density, or by manual definition) and returns each cluster as a Seeq condition. This can be useful for determining **regularly visited** regions in parameter space for a set of signals. Why this is important is best understood by analogy. If you want to know how your car's gas mileage is performing over time, a naive way to monitor it is by recording, at the end of every month, your total number of miles driven and total gas used that month. This will give you a measure of how your gas mileage performs over time **but is it a good measure of how your car is performing?** Gas mileage depends on a variety of factors - outdoor air temperature, number of people in the car, speed *etc* - so a better measure of how your car is performing is by setting some set of parameters (*e.g.* 70 degrees, driving between 25 and 30mph with only 1 person in the car) and calculating your gas mileage **only** when your car is operating in that mode. By examing this *gas mileage during known conditions* over time, you have a much better measure of how your car is performing.
 
-This is precisely the aim of the clustering addon. In a real process, it is more complicated than a car, and it is near impossible to know what set of conditions you should use to specify your monitoring periods (*e.g.* the 70 degrees, 1 person, from the car example). Clustering helps you with this. It gives you candidate parameter sets - regions in your data where spends a lot of time - so that you can compare how your process is performing *in a known, and consistent, parameter space*.
+This is precisely the aim of the clustering addon. In a real process it is more complicated than a car, and it is near impossible to know what set of conditions you should use to specify your monitoring periods (*e.g.* the 70 degrees, 1 person, from the car example). Clustering helps you with this. It gives you candidate parameter sets - regions in your data where spends a lot of time - so that you can compare how your process is performing *in a known, and consistent, parameter space*.
 
 When you open the tool, you will be met with two options:
 
@@ -23,11 +23,11 @@ When you open the tool, you will be met with two options:
 1. [Visual (Supervised)](#visual-supervised) - allows you to manually define a cluster boundary in 2-dimensional data
 2. [Density (Unsupervised)](#density-unsupervised) - density based clustering to find clusters in n-dimensional data 
 
-**you may have to refresh the worksheet** once the addon tool says "SUCCESS". If only the conditions are displayed and not the original signals, please simply refresh the page. 
+**You may have to refresh the worksheet** once the addon tool says "SUCCESS". If only the conditions are displayed and not the original signals, please simply refresh the page. 
 
 ## Visual (Supervised)
 
-Visual clustering will only work on 2-dimensional data. You simply define a region, manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
+Visual clustering is only applicable to 2-dimensional data. You simply define a region manually, and seeq-clustering will look for datapoints in that region. See an explanation for [how it works](#how-it-works-visual)
 
 ![N|Scheme](images/visual.PNG)
 ![N|Scheme](images/visual_result.png)
@@ -44,12 +44,12 @@ Whichever mode (Visual or Density) you choose, the form of the clusters returned
 
 ### Explanation of Density Based Parameters
 
-**Minimum Cluster Size (mcs)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, which are contain more data each. See [examples](#density-based-examples)
+**Minimum Cluster Size (MCS)** - the minimum number of datapoints which much be including in a cluster for it to be classified as a viable cluster. A larger number will produce fewer clusters, each of which then contains more data. See [examples](#density-based-examples)
 
-- There are two ways to specify mcs. Either by specifying a number (*e.g.* "I want my clusters to contain no fewer that 200 points") or by a percent of the total number of data points (*e.g.* "I want my clusters to contain no less that 5% of the data"). 
+- There are two ways to specify MCS. Either by specifying a value (*e.g.* "I want my clusters to contain no fewer that 200 points") or by a percent of the total number of data points (*e.g.* "I want my clusters to contain no less that 5% of the data"). 
 ***note*** *percent of datapoints is calculated based on Display Range.* 
 - You may (indeed, likely) not know what the total number of datapoints is in your data, so it is recommended to supply both a `Percent of data (%)` and a `Min Cluster Points`. 
-- If both `Percent of data (%)` and `Min Cluster Points` are supplied, the default behavior will be to use the **larger** of the two values for the mcs, *i.e.* 
+- If both `Percent of data (%)` and `Min Cluster Points` are supplied, the default behavior will be to use the **larger** of the two values for the MCS, *i.e.* 
 
 ![equation](https://latex.codecogs.com/gif.latex?\max\left[\left(&space;\text{Min&space;Cluster&space;Points}\right&space;),\left(&space;\text{Percent&space;of&space;Data&space;(%)}&space;\times&space;\text{Number&space;of&space;datapoints}\right&space;)\right]). 
 
@@ -85,7 +85,7 @@ When you define a region manually in visual based clustering, the algorithm defi
 
 ![N|Scheme](images/contourpoints.png)
 
-This allows for a new test point (say, during calculation of Condition) to be compared against the contour points to determine if that new test point is in the cluster or not. Owing to the nature of the random walk, this method is probabilistic and will not capture every member point 100% of the time. This membership definition is only used for visual clustering. 
+This allows for a new test point (say, during calculation of Seeq condition) to be compared against the contour points to determine if that new test point is in the cluster or not. Owing to the nature of the random walk, this method is probabilistic and will not capture every member point 100% of the time. This membership definition is only used for visual clustering. 
 
 Pseudo code for deterimining cluster membership:
 
