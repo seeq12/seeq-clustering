@@ -37,6 +37,9 @@ def get_signals(worksheet):
 		# order by the scatterplot series
 		sps = worksheet.scatter_plot_series
 		X_id, Y_id = sps['X']['ID'], sps['Y']['ID']
+		if X_id == Y_id: # case when you are plotting a straightline, it happens.
+			return signals_df
+
 		X_index = signals_df[signals_df['ID'] == X_id].index[0] # first element is the index
 		Y_index = signals_df[signals_df['ID'] == Y_id].index[0]
 		remaining_indices = list(set(signals_df['ID'].values) - set([X_id, Y_id]))
