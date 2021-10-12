@@ -176,7 +176,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     #the following will write a global variable to the ipython kernel
 
-    out = s1.selected.js_on_change('indices', CustomJS(args=dict(s1=s1, s2=s2), code="""
+    out = s1.selected.js_on_change('indices', CustomJS(args=dict(s1=s1, s2=s2), code="""          
             var inds = cb_obj.indices;
             var d1 = s1.data;
             var d2 = s2.data;
@@ -187,10 +187,10 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
                 d2['y'].push(d1['y'][inds[i]])
             }
             s2.change.emit()
-            var command = "global indexofselection; indexofselection =" + inds;
+            var command = "__builtins__.indexofselection =" + inds;
 
             var kernel = IPython.notebook.kernel;
-            kernel.execute(command)
+            kernel.execute(command);
         """)
     )
     layout = row(p1)
