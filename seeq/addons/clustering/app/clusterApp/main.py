@@ -370,6 +370,18 @@ class GUI():
 		clear_output()
 		app, now_str = self.loadWorksheet(wkb, wks, api_url, auth_token, quiet = quiet)
 		signals = app.signals.Name.values
+
+		# ensure there are enough signals on the screen (at least two)
+		if len(signals) <= 1:
+			display(
+				HTML("""<div>
+				<h4>At least 2 Signals are needed for seeq-clustering. Please add more signals to the worksheet and try again. </h4>
+				 </div>"""
+				 )
+				)
+				
+			return
+
 		clear_output()
 		
 		global xsignal, ysignal, minClusterSize, percentOfData, clusterExtent, _cluster_name
