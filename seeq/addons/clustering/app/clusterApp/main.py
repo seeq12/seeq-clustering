@@ -375,8 +375,8 @@ class GUI():
 		if len(signals) <= 1:
 			display(
 				HTML("""<div>
-				<h4>At least 2 Signals are needed for seeq-clustering. Please add more signals to the worksheet and try again. </h4>
-				 </div>"""
+				<h4>At least 2 Signals are needed for seeq-clustering (only {} was provided). Please add more signals to the worksheet and try again. </h4>
+				 </div>""".format(len(signals))
 				 )
 				)
 				
