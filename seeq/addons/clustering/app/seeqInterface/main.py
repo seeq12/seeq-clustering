@@ -17,7 +17,7 @@ __all__ = ('get_signals',
 
 def get_signals(worksheet):
 	"""
-	Get the signals displayed on a worksheet.
+	Get the signals displayed on a worksheet. Order the the resulting dataframe such that the first two rows correspond to x and y on the scatterplot.
 
 	args:
 		worksheet (seeq.spy.workbooks._worksheet.AnalysisWorksheet): Worksheet
@@ -30,7 +30,29 @@ def get_signals(worksheet):
 	if len(display_items) == 0:
 		raise ValueError('No items (signals, conditions, etc) are displayed in this worksheet.')
 
-	return display_items.query("Type == 'Signal'")
+	signals_df = display_items.query("Type == 'Signal'")
+
+	try:
+
+		# order by the scatterplot series
+		sps = worksheet.scatter_plot_series
+		X_id, Y_id = sps['X']['ID'], sps['Y']['ID']
+		if X_id == Y_id: # case when you are plotting a straightline, it happens.
+			return signals_df
+
+		X_index = signals_df[signals_df['ID'] == X_id].index[0] # first element is the index
+		Y_index = signals_df[signals_df['ID'] == Y_id].index[0]
+		remaining_indices = list(set(signals_df['ID'].values) - set([X_id, Y_id]))
+		indexer = [X_index, Y_index]
+		
+		for ind in remaining_indices:
+			indexer.append(signals_df[signals_df['ID'] == ind].index[0])
+			
+		return signals_df.reindex(indexer).reset_index(drop = True)
+	
+	except:
+		
+		return signals_df
 
 def get_conditions(worksheet):
 	"""
