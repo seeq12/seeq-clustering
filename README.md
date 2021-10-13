@@ -104,7 +104,7 @@ isinCluster(test_point, contour_points)
 
 # Installation
 
-The backend of **seeq-clustering** requires **Python 3.7** or later.
+The backend of **seeq-clustering** requires **Python 3.7** or later. **seeq-clustering** is compatible with Seeq R53. Additional version compatibilities in progress.  
 
 ## Dependencies
 
@@ -223,7 +223,7 @@ Failed to build hdbscan
 ERROR: Could not build wheels for hdbscan which use PEP 517 and cannot be installed directly
 ```
 
-simply follow the link provided in the error (https://visualstudio.microsoft.com/visual-cpp-build-tools/) and download and install Microsoft C++ Build Tools. Follow the download instructions and install the defaults for Microsoft C++ Build Tools:
+simply follow the link provided in the error (https://visualstudio.microsoft.com/visual-cpp-build-tools/) and download and install Microsoft C++ Build Tools. **NOTE** it is highly recommended that you ensure Seeq server is stopped before installing Microsoft C++ Build Tools. Follow the download instructions and install the defaults for Microsoft C++ Build Tools:
 
 <p align="center"><a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">
   <img src="./images/cpp_install_1.png" width="350" title="download Microsoft C++ Build Tools">
@@ -270,7 +270,7 @@ git clone git@github.com:seeq12/seeq-clustering.git
 
 # Changelog
 
-The change log can be found [**here**](https://seeq12.github.io/seeq-clustering/changelog.html)
+The change log can be found **here**.
 
 
 ----
