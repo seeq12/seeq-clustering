@@ -279,8 +279,7 @@ The change log can be found **here**.
 
 Code related issues (e.g. bugs, feature requests) can be created in the
 [issue tracker](https://github.com/seeq12/seeq-clustering/issues)
-Any other general comments or questions (non-code related) can be emailed to
-[Seeq](mailto:applied.research@seeq.com?subject=[seeq-clustering]%20General%20Question)
+
 
 Maintainer: Eric Parsonnet
 
