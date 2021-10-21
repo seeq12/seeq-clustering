@@ -1,4 +1,5 @@
 from IPython.display import display
+from IPython.display import clear_output
 from ipywidgets import VBox, HBox, widgets
 import time
 import sys
@@ -22,7 +23,7 @@ __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', '
 
 
 def clear():
-    os.system( 'cls' )
+    clear_output(wait=True)
 
 
 def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
@@ -77,18 +78,16 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     #for cluster extent looks at .extent_scalar
     app.extent_scalar = float(clusterExtent.value) 
     
-    sys.stdout.write("\rPushing Conditions...")
+    print("\rPushing Conditions...")
     clear()
     app.push_cluster_formulas(checksum, basename, timeOfRun)
-    sys.stdout.write("\rOrganizing Worksheet...")
-    sys.stdout.flush()
+    print("\rOrganizing Worksheet...")
     
     time.sleep(1)
     clear()
 
     app.update_wkstep_and_push()
-    sys.stdout.write("\rSUCCESS.                                 ")
-    sys.stdout.flush()
+    print("\rSUCCESS.")
     return 
 
 def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
