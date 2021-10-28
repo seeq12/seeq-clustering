@@ -390,7 +390,7 @@ class GUI():
 		clear_output()
 		
 		global xsignal, ysignal, minClusterSize, percentOfData, clusterExtent, _cluster_name
-		global exactBox, buttonClusterUnsupervised, buttonSelectSupervised
+		global exactBox, buttonClusterUnsupervised, buttonSelectSupervised, buttonCloseWindow
 		global buttonSelectUnsupervised, buttonStartSupervised, buttonClusterSupervised
 		global widgetDisplayUnsupervised, widgetDisplaySupervised
 		
