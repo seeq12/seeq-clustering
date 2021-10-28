@@ -6,7 +6,7 @@ import datetime
 import warnings
 
 import IPython
-from IPython.display import clear_output
+from IPython.display import clear_output, Javascript
 
 from ipywidgets import widgets
 from ipywidgets import HTML
@@ -311,7 +311,7 @@ class GUI():
 		buttons = [buttonSelectSupervised, buttonSelectUnsupervised, buttonClusterUnsupervised]
 		clusterUnsupervised(
 			app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent,
-			_cluster_name.value, _cluster_time.value
+			_cluster_name.value, _cluster_time.value, buttonCloseWindow,
 		)
 		return
 	def uiStartSupervised(*args):
@@ -333,8 +333,13 @@ class GUI():
 		clusterSupervised(
 			app, buttons, xsignal, ysignal, clusterExtent, 
 			datadf, indexofselection, hist_grid_points, 
-			_cluster_name.value, _cluster_time.value
+			_cluster_name.value, _cluster_time.value, buttonCloseWindow,
 		)
+		return
+
+	def closeWindow(*args):
+		clear_output()
+		display(Javascript("window.open('','_self').close()"))
 		return
 
 
@@ -461,6 +466,7 @@ class GUI():
 		buttonSelectUnsupervised = widgets.Button(description="Density (Unsupervised)", layout=self._layout)
 		buttonStartSupervised = widgets.Button(description="Start Selection", layout=self._layout)
 		buttonClusterSupervised = widgets.Button(description="Define Cluster", layout=self._layout)
+		buttonCloseWindow = widgets.Button(description="Close Window", layout=self._layout)
 		_reload = widgets.Button(description="Reload from Seeq", 
 								 layout=Layout(flex='1 1 auto', width='20%'),
 								 button_style = 'info'
@@ -494,6 +500,7 @@ class GUI():
 		buttonClusterUnsupervised.on_click(self.uiClusterUnsupervised)
 		buttonStartSupervised.on_click(self.uiStartSupervised)
 		buttonClusterSupervised.on_click(self.uiClusterSupervised)
+		buttonCloseWindow.on_click(self.closeWindow)
 		_reload.on_click(self.reload)
 
 		display(VBox([HBox([logo,_working]),

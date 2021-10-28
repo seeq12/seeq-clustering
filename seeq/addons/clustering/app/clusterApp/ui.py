@@ -36,7 +36,7 @@ def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
     return
 
 
-def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, basename, timeOfRun,
+def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, basename, timeOfRun, closeButton,
     default_override = 200, percent_of_data = 20):
     """Cluster and generate conditions unsupervised.
 
@@ -88,6 +88,7 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
 
     app.update_wkstep_and_push()
     print("\rSUCCESS.")
+    display(closeButton)
     return 
 
 def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
@@ -199,7 +200,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     return datadf, hist_grid_points
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points, basename, timeOfRun):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points, basename, timeOfRun, closeButton):
     
     for button in buttons:
         button.close()
@@ -240,6 +241,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, ind
     app.update_wkstep_and_push()
     sys.stdout.write("\rSUCCESS.                                 ")
     sys.stdout.flush()
+    display(closeButton)
     return
 
 def find_true_points_in_selection_boundary(indexofselection, check_points, hist_grid_points):
