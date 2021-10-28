@@ -338,7 +338,6 @@ class GUI():
 		return
 
 	def closeWindow(*args):
-		clear_output()
 		display(Javascript("window.open('','_self').close()"))
 		return
 

@@ -78,6 +78,10 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     #for cluster extent looks at .extent_scalar
     app.extent_scalar = float(clusterExtent.value) 
     
+    _wrapUp(app, checksum, basename, timeOfRun)
+    return 
+
+def _wrapUp(app, checksum, basename, timeOfRun):
     print("\rPushing Conditions...")
     clear()
     app.push_cluster_formulas(checksum, basename, timeOfRun)
@@ -87,9 +91,10 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     clear()
 
     app.update_wkstep_and_push()
-    print("\rSUCCESS.")
+    clear_output()
+    print("\rDone.")
     display(closeButton)
-    return 
+    return
 
 def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
@@ -231,17 +236,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, ind
     
     app.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
     
-    sys.stdout.write("\rPushing Conditions...")
-    app.push_cluster_formulas(checksum, basename, timeOfRun)
-    sys.stdout.write("\rOrganizing Worksheet...")
-    sys.stdout.flush()
-    
-    time.sleep(1)
-    
-    app.update_wkstep_and_push()
-    sys.stdout.write("\rSUCCESS.                                 ")
-    sys.stdout.flush()
-    display(closeButton)
+    _wrapUp(app, checksum, basename, timeOfRun)
     return
 
 def find_true_points_in_selection_boundary(indexofselection, check_points, hist_grid_points):
