@@ -1,6 +1,7 @@
 import hdbscan
 import pandas as pd
 import numpy as np
+from IPython.display import clear_output
 
 import warnings
 
@@ -19,6 +20,8 @@ def cluster(datadf, target_cols = [], conditioner_cols = [], mcs = 'default', pc
         
         this method removes nans outright
     """
+    clear_output()
+    print('entering historicalBenchmarking.cluster')
     ddf = datadf
     ddf.dropna(inplace = True)
     
@@ -29,9 +32,13 @@ def cluster(datadf, target_cols = [], conditioner_cols = [], mcs = 'default', pc
             fixedval = default_override
         mcs = max(int(len(ddf)*percent_of_data/100), fixedval) #where we determine mcs 
 
+    clear_output()
+    print('selecting conditioner data')
     cdf = ddf[conditioner_cols]
 
     standard_scaler = StandardScaler()
+    clear_output()
+    print('Normalizing via standard_scaler')
     X = standard_scaler.fit_transform(np.array(cdf))
 
     if pca_n == 'all':
@@ -46,6 +53,8 @@ def cluster(datadf, target_cols = [], conditioner_cols = [], mcs = 'default', pc
         display(html)
 
 
+    clear_output()
+    print('PCA') # this is no longer needed???
     pca = PCA(n_components=pca_n) # how many components to collapse to (here we use 2)
     Sp_ = pca.fit_transform(X)
 
@@ -53,6 +62,8 @@ def cluster(datadf, target_cols = [], conditioner_cols = [], mcs = 'default', pc
     unscaled_data = np.array(cdf) # we need the original data for posting condition to seeq
 
 
+    clear_output()
+    print('hdbscan clusterer generation')
     #mcs = mcs #where we specify percentage of data each cluster must should cover 
     clusterer = hdbscan.HDBSCAN(
         min_cluster_size=mcs, 
@@ -62,6 +73,8 @@ def cluster(datadf, target_cols = [], conditioner_cols = [], mcs = 'default', pc
         **kwargs
         )
 
+    clear_output()
+    print('hdbscan fitting unscaled data')
     clusterer.fit(unscaled_data)
 
     #clusterer.pca = pca

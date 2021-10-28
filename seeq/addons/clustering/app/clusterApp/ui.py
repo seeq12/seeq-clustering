@@ -1,4 +1,5 @@
 from IPython.display import display
+from IPython.display import clear_output
 from ipywidgets import VBox, HBox, widgets
 import time
 import sys
@@ -22,7 +23,7 @@ __all__ = ('checksum','selectType','clusterUnsupervised', 'clusterSupervised', '
 
 
 def clear():
-    os.system( 'cls' )
+    clear_output(wait=True)
 
 
 def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
@@ -35,7 +36,7 @@ def selectType(vboxDisplay, buttonSelectSupervised, buttonSelectUnsupervised,):
     return
 
 
-def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, basename, timeOfRun,
+def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percentOfData, clusterExtent, basename, timeOfRun, closeButton,
     default_override = 200, percent_of_data = 20):
     """Cluster and generate conditions unsupervised.
 
@@ -77,19 +78,23 @@ def clusterUnsupervised(app, buttons, signals, minClusterSize, exactBox, percent
     #for cluster extent looks at .extent_scalar
     app.extent_scalar = float(clusterExtent.value) 
     
-    sys.stdout.write("\rPushing Conditions...")
+    _wrapUp(app, checksum, basename, timeOfRun, closeButton)
+    return 
+
+def _wrapUp(app, checksum, basename, timeOfRun, closeButton):
+    print("\rPushing Conditions...")
     clear()
     app.push_cluster_formulas(checksum, basename, timeOfRun)
-    sys.stdout.write("\rOrganizing Worksheet...")
-    sys.stdout.flush()
+    print("\rOrganizing Worksheet...")
     
     time.sleep(1)
     clear()
 
     app.update_wkstep_and_push()
-    sys.stdout.write("\rSUCCESS.                                 ")
-    sys.stdout.flush()
-    return 
+    clear_output()
+    print("\rDone.")
+    display(closeButton)
+    return
 
 def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
@@ -200,7 +205,7 @@ def startSupervised(app, buttons, xsignal, ysignal, buttonClusterSupervised):
 
     return datadf, hist_grid_points
     
-def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points, basename, timeOfRun):
+def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, indexofselection, hist_grid_points, basename, timeOfRun, closeButton):
     
     for button in buttons:
         button.close()
@@ -231,16 +236,7 @@ def clusterSupervised(app, buttons, xsignal, ysignal, clusterExtent, datadf, ind
     
     app.extent_scalar = float(clusterExtent.value) #for cluster extent looks at self.extent_scalar
     
-    sys.stdout.write("\rPushing Conditions...")
-    app.push_cluster_formulas(checksum, basename, timeOfRun)
-    sys.stdout.write("\rOrganizing Worksheet...")
-    sys.stdout.flush()
-    
-    time.sleep(1)
-    
-    app.update_wkstep_and_push()
-    sys.stdout.write("\rSUCCESS.                                 ")
-    sys.stdout.flush()
+    _wrapUp(app, checksum, basename, timeOfRun, closeButton)
     return
 
 def find_true_points_in_selection_boundary(indexofselection, check_points, hist_grid_points):
