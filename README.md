@@ -104,7 +104,7 @@ isinCluster(test_point, contour_points)
 
 # Installation
 
-The backend of **seeq-clustering** requires **Python 3.7** or later. **seeq-clustering** is compatible with Seeq R53. Additional version compatibilities in progress.  
+The backend of **seeq-clustering** requires **Python 3.7** or later. **seeq-clustering** is compatible with Seeq R53. Additional version compatibilities in progress. **seeq-clustering** is not compatible with R54, though will be soon. 
 
 ## Dependencies
 
@@ -116,7 +116,7 @@ matches your Seeq server. For more information on the `seeq` module see [seeq at
 
 If you want to install **seeq-clustering** as a Seeq Add-on Tool, you will need:
 
-- Seeq Data Lab (>= R50.5.0, >=R51.1.0, or >=R52.1.0)
+- Seeq Data Lab (>= R50.5.0, >=R51.1.0, or >=R52.1.0), up to R53 (beyond which SDL no longer comes with Git. A newer version, compatible with R54 is in the works.)
 - `seeq` module whose version matches the Seeq server version
 - Access (and permissions) to machine running Seeq server
 	- Knowledge or where [external calculation](https://seeq.atlassian.net/wiki/spaces/KB/pages/509509833/External+Calculation+Engine) scripts are located on that machine (see [User Installation](#user-installation) below)
