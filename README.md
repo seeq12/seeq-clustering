@@ -104,7 +104,7 @@ isinCluster(test_point, contour_points)
 
 # Installation
 
-The backend of **seeq-clustering** requires **Python 3.7** or later. **seeq-clustering** is compatible with Seeq R53. Additional version compatibilities in progress. **seeq-clustering** is not compatible with R54, though will be soon. 
+The backend of **seeq-clustering** requires **Python 3.7** or later. **seeq-clustering** is compatible with Seeq R53. Additional version compatibilities in progress. **seeq-clustering** is **not** compatible with >=R53.4, though will be soon. 
 
 ## Dependencies
 
