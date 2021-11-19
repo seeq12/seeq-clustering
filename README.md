@@ -168,20 +168,21 @@ If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not ha
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-8. In any Seeq workbook, retrieve the checksum of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`):
+8. In any Seeq workbook, retrieve the Script Name of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`). **important** Ensure you grab the complete script name (including `Clustering.py:NUMERIC:`, not just the checksum):
 
 ![N|Scheme](images/checksum_from_dropdown.png)
 
 If you the checksum is not appearing see [here](#clustering-checksum-doesnt-show-in-seeq)
 
+
 9. In your existing Seeq Data Lab **Terminal** window, navigate to `clustering` directory: `cd seeq-clustering/seeq/addons/clustering/`
 
 
-10. Update your app to point to your unique checksum. Run `python _config.py checksum <yourchecksumhere>` where `<yourchecksumhere>` is that which you retrieved previously (from a Seeq workbook)
+10. Update your app to point to your unique Script Name. Run `python _config.py checksum <yourchecksumhere>` where `<your_script_name_here>` is that which you retrieved previously (from a Seeq workbook)
 
-11. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering `App.ipynb` notebook (located in the `seeq/addons/clustering/` directory), *e.g.* `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/seeq-server/seeq/addons/clustering/App.ipynb`, you will need this in a moment.
+11. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering `App.ipynb` notebook (located in the `seeq-clustering/seeq/addons/clustering/` directory), *e.g.* `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/seeq-server/seeq/addons/clustering/App.ipynb`, you will need this in a moment.
 
-12. Install the addon. In Seeq Data Lab **terminal**, return to the `seeq-clustering` directory: `cd ~/seeq-clustering`. Run `python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url> --app_url <app_notebook_url>`, where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server and specific url for the clustering App notebook, respectively.
+12. Install the addon. In Seeq Data Lab **terminal**, navigate to the directory: `cd ~/seeq-clustering/seeq/addons/clustering/`. Run `python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url> --app_url <app_notebook_url>`, where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server and specific url for the clustering App notebook, respectively.
 
 Here is an example:
 
@@ -241,6 +242,10 @@ If you had to do [manually setup for clustering config](#Manual-external-calc-Cl
 Ensure you are using the correct path `~/external-calculation/python/user/` for your instance of Seeq that is currently running. 
 
 You may have to [install seeq](https://pypi.org/project/seeq/) for external calc. See instructions [above](#pip-Install-hdbscan-for-external-calc)
+
+#### SPyRuntimeError while pushing conditions
+
+If you encounter the error while pushing conditions (during app excecution): `SPyRuntimeError: Error pushing "{ID}" {Condition} <name> : Failed to write item in batch request: variable is undefined at '$a', line=1, column=271`. Ensure that you have correctly copied the complete external calc Script Name (Step 8). Be sure to include the full name `Clustering.py:NUMERIC:<your_unique_checksum>`.
 
 #### Updating External Calc
 
