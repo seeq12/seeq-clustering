@@ -20,11 +20,11 @@ def save_model_to_disk(clusterer, itemId,):
 	#check to make sure the dir exists
 	print('entered save_model_to_disk')
 	if model_dir not in set(os.listdir(wkdir)):
-		os.mkdir('{}/{}'.format(wkdir, model_dir))
+		os.mkdir(os.path.join(wkdir, model_dir))
 
-	with open('{}/{}/{}.pkl'.format(wkdir, model_dir, itemId), 'wb') as f:
+	with open(os.path.join(wkdir, model_dir, '{}.pkl'.format(itemId)), 'wb') as f:
 		pickle.dump(clusterer, f)
-		print('opened file', '{}/{}/{}.pkl'.format(wkdir, model_dir, itemId))
+		print('opened file', os.path.join(wkdir, model_dir, '{}.pkl'.format(itemId)))
 
 	return
 

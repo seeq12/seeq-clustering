@@ -181,23 +181,22 @@ class App():
 				continue
 
 			##now generate the formula
-			alphabet = 'abcdefghijklmnopqrstuvwxyz'
+			alphabet = 'abcdefghijklmnopqrst'
 			
 			seeq_dollarsign_ids = []
 			j = 0 #multiplier duplicate count of letters
 			for i in range(len(conditioners)):
-				if np.mod(i,26) == 0:
+				if np.mod(i,len(alphabet)) == 0:
 					j+=1
-				seeq_dollarsign_ids.append(alphabet[np.mod(i, 26)]*j)
+				seeq_dollarsign_ids.append(alphabet[np.mod(i, len(alphabet))]*j)
 
 			insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
 			for dollarsign_id in seeq_dollarsign_ids:
 				insertion_into_formula += "$" + str(dollarsign_id) + ","
 			insertion_into_formula = insertion_into_formula[:-1]
 
-			#TODO: finish up formula
-			formula_string = "externalCalculation('{}', '{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
-			formula = formula_string.format(checksum, self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
+			formula_string = "ClusteringCalc_ndim('{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
+			formula = formula_string.format(self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
 			#print(formula)
 			
 			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
