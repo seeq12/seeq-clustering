@@ -34,7 +34,7 @@ setup_args = dict(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'hdbscan>=0.8.27'
+        'hdbscan>=0.8.27',
         'bokeh>=2.4.2'
     ],
     classifiers=[
