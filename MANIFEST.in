@@ -1,0 +1,2 @@
+global-exclude *__pycache__
+include seeq/addons/clustering/*.ipynb

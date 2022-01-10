@@ -32,13 +32,13 @@ setup_args = dict(
     url="https://github.com/seeq12/seeq-clustering",
     packages=setuptools.find_namespace_packages(include=['seeq.*']),
     include_package_data=True,
-    package_data={
-        'seeq':['addons/clustering/*.ipynb']
-    }
+    package_data={'seeq': ['addons/clustering/_notebook.ipynb']},
     zip_safe=False,
     install_requires=[
-        'hdbscan==0.8.27',
-        'bokeh>=2.4.2'
+        'hdbscan>=0.8.27',
+        'bokeh>=2.4.2',
+        'numpy>=1.22.0',
+        'pandas>=1.3.5'
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",

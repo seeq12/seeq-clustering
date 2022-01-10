@@ -3,7 +3,13 @@ from packaging import version
 from pathlib import Path
 import os
 
+from getpass import getpass
+from urllib.parse import urlparse, urlunparse
+import re
+
 __all__ = ('install_addon',)
+
+DATA_LAB_PROJECT_ID_REGEX = r'.*/data-lab/([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}).*'
 
 def copy_and_paste_notebook():
     _dir = Path(__file__).resolve().parent
@@ -118,8 +124,21 @@ def sanitize_app_url(url):
     if 'apps' not in url:
         raise ValueError('app_url is malformed.')
 
+def sanitize_sdl_url(url):
+    parsed = urlparse(url)
+    project_id_search = re.search(DATA_LAB_PROJECT_ID_REGEX, url, re.IGNORECASE)
+    if parsed.scheme == '' or parsed.netloc == '' or parsed.path == '':
+        raise ValueError(f"The SDL_url should have the format "
+                         f"https://my.seeq.com/data-lab/6AB49411-917E-44CC-BA19-5EE0F903100C/ but got {url}")
+    if project_id_search is None:
+        raise ValueError(f"Invalid URL. Could not find data-lab project ID. Got URL: {url}")
+    id = project_id_search.group(1)
+    return urlunparse(parsed).strip(" ").split(id)[0] + id
 
-def install_addon(seeq_url, app_url, *, sort_key=None, permissions_group: list = None, permissions_users: list = None, username = None, password = None, ignore_ssl_errors = True):
+
+def install_addon(*, seeq_url: str = None, app_url: str = None, sort_key=None, 
+    permissions_group: list = None, permissions_users: list = None, username=None, 
+    password=None, ignore_ssl_errors=True):
     """
     Install as an Add-on Tool in Seeq Workbench
 
@@ -149,7 +168,23 @@ def install_addon(seeq_url, app_url, *, sort_key=None, permissions_group: list =
         Workbench
     """
     if spy.client == None:
-        spy.login(username=username, password=password, url=seeq_url, ignore_ssl_errors=ignore_ssl_errors)
+        if username is None:
+            username = input("Username or Access Key: ")
+        if password is None:
+            password = getpass("Password: ")
+        spy.login(username=username, password=password, ignore_ssl_errors=ignore_ssl_errors)
+
+    if seeq_url is None:
+        seeq_url = input(f"\n Enter Seeq base URL for [{spy.client.host.split('/api')[0]}] (e.g. https://my.seeq.com/): ")
+        if seeq_url == '':
+            seeq_url = spy.client.host.split('/api')[0]
+    url_parsed = urlparse(seeq_url)
+    seeq_url_base = f"{url_parsed.scheme}://{url_parsed.netloc}"
+
+    project_id = spy.utils.get_data_lab_project_id()
+    sdl_url = f'{seeq_url_base}/data-lab/{project_id}'
+    sdl_url = sanitize_sdl_url(sdl_url)
+    app_url = os.path.join(os.path.join(sdl_url, 'notebooks'), 'App.ipynb')
 
     system_api = sdk.SystemApi(spy.client)
     users_api = sdk.UsersApi(spy.client)

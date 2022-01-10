@@ -235,7 +235,7 @@ class App():
 
 		new_display_items = pd.concat((self.signals[['Name', 'ID', 'Type']], self.condition_results[['Name', 'ID', 'Type']]))
 
-		worksheet.display_items = new_display_items
+		worksheet.display_items = new_display_items.reset_index(drop=True, inplace=True) 
 		#with updated display items
 		workbook.push()
 
