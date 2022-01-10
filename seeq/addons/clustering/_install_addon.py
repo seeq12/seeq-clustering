@@ -186,6 +186,8 @@ def install_addon(*, seeq_url: str = None, app_url: str = None, sort_key=None,
     sdl_url = sanitize_sdl_url(sdl_url)
     app_url = os.path.join(os.path.join(sdl_url, 'notebooks'), 'App.ipynb')
 
+    print("Installing Clustering...")
+
     system_api = sdk.SystemApi(spy.client)
     users_api = sdk.UsersApi(spy.client)
     user_groups_api = sdk.UserGroupsApi(spy.client)

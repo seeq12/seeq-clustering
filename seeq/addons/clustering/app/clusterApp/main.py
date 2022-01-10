@@ -4,6 +4,7 @@ import pickle
 import secrets
 import datetime
 import warnings
+import time
 
 import IPython
 from IPython.display import clear_output, Javascript
@@ -235,9 +236,11 @@ class App():
 
 		new_display_items = pd.concat((self.signals[['Name', 'ID', 'Type']], self.condition_results[['Name', 'ID', 'Type']]))
 
-		worksheet.display_items = new_display_items.reset_index(drop=True, inplace=True) 
+		worksheet.display_items = new_display_items.reset_index(drop=True) 
 		#with updated display items
 		workbook.push()
+
+		time.sleep(3)
 
 		#get workbook with new updates.
 		workbook = seeqInterface.get_workbook(self.workbook_id)
@@ -252,7 +255,7 @@ class App():
 		
 		sq_scatter_plot_store = wkstp_stores['sqScatterPlotStore']
 		sq_scatter_plot_store.update({'colorConditionIds':to_color_condition_ids})
-		wkstp_stores['sqWorksheetStore'].update({'viewKey':'SCATTER_PLOT'})
+		wkstp_stores['sqWorksheetStore'].update({'viewKey':'SCATTER_PLOT', 'returnViewKey':'SCATTER_PLOT'})
 
 		new_workstep.set_as_current()
 
