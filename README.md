@@ -1,4 +1,5 @@
-[![N|Solid](https://www.seeq.com/sites/default/files/seeq-logo-navbar-small.png)](https://www.seeq.com)
+**R54 Branch is still under development.** Installation instructions are incomplete. 
+
 
 [![N|Scheme](images/clusters.PNG)](https://www.seeq.com)
 
