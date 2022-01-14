@@ -1,5 +1,6 @@
-FILE = open('Clustering.py', 'r')
+FILE = open('Basic.py', 'r')
 list_of_lines = FILE.readlines()
+FILE.close()
 
 import sys
 import os
@@ -9,7 +10,7 @@ def clusteringModelsPath(path):
 	print("updating models path to {}".format(path))
 	list_of_lines[1] = "wkdir = '{}'\n".format(path)
 
-	a_file = open("Clustering.py", "w")
+	a_file = open("Basic.py", "w")
 	a_file.writelines(list_of_lines)
 	a_file.close()
 	return
