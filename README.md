@@ -205,7 +205,7 @@ If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbs
 
 To **confirm** that the external calculation has been installed correctly, in Seeq Workbench ensure that create a new formula and search for `cluster`. You should see the following:
 
-![N|Scheme](images/formula.png)
+![N|Scheme](images/formula.PNG)
 
 If you run into errors, [please open an issue](https://github.com/seeq12/seeq-clustering/issues)
 
