@@ -1,5 +1,3 @@
-**R54 Branch is still under development.** Installation instructions are incomplete. 
-
 # Contents
 
 1. [User Guide](#user-guide)
@@ -150,24 +148,30 @@ pip install <whl_file_name>
 python -m seeq.addons.clustering
 ```
 
+and follow the instructions when prompted. 
+
 There are additional **Options** for the addon installation. These include `--users` and `--groups`. These can be used to change permissions for the addon tool. For example to give permission to users `me` and `you` one would install the addon with as:
 
 ```bash
 python -m seeq.addons.clustering --users me you
 ```
 
-INSTRUCTIONS ARE INCOMPLETE BELOW
+4. [Manually download](https://stackoverflow.com/a/13593430/13955469) the two files (`Basic.py` and `config_ext_calc.py`) from the [external-calc folder](https://github.com/seeq12/seeq-clustering/external-calc) 
 
-4. Manually download the two files (`Clustering.py` and `_Clustering_config.py`) from the [external-calc folder](#https://github.com/seeq12/seeq-clustering/external-calc) **and move** them to the external calculation folder on the machine where Seeq server is running, (typically `'C:/Seeq/plugins/external-calculation/python/user/ClusterCalc/'` or similar) **it is likely you will need to create the folder "ClusterCalc"**
+5. Navigate to the external calculation folder on the machine where Seeq server is running, (typically `'C:/Seeq/plugins/external-calculation/python/user/'` or similar) and **create a new folder** called `ClusteringCalc`. 
+
+6. Move the two downloaded files (`Basic.py` and `config_ext_calc.py`) into your newly created `/ClusteringCalc/` folder. 
 
 
-5. In command line on the computer or server running Seeq (*not* seeq data lab terminal), navigate to the external calculation python folder (using the example from above): `cd C:/Seeq/plugins/external-calculation/python/user/ClusterCalc`
+7. In command line on the maching running Seeq (*not* seeq data lab terminal), navigate to the location of the files you just added (using the example from above): `cd C:/Seeq/plugins/external-calculation/python/user/ClusteringCalc`
 
-6. Configure the location (on machine running Seeq Server) where clustering models will be stored. Run `python _Clustering_config.py clusteringModelsPath` The default is to store the models in the same location as dir as Clustering.py, *i.e.* `D:/Seeq/plugins/external-calculation/python/user/` in this example. If you wish to store your models elsewhere, and you have the required permissions Assuming you have permissions to access the path, this can be done by running `python _Clustering_config.py clusteringModelsPath <yourpathhere>`
+8. Configure the location (on machine running Seeq Server) where clustering models will be stored. To do this, run `python config_ext_calc.py clusteringModelsPath` 
 
-If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not have python installed on the Seeq server host machine), see [manual instructions](#manual-external-calc-clustering-config)
+If you are unable to run `python config_ext_calc.py` (*e.g.* if you do not have python installed on the Seeq server host machine), see [manual instructions](#manual-external-calc-clustering-config)
 
-7. Follow the instructions in external-calc readme (typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html`) to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
+The default is to store the models in the same location as dir as Clustering.py, *i.e.* `D:/Seeq/plugins/external-calculation/python/user/` in this example. If you wish to store your models elsewhere, and you have the required permissions Assuming you have permissions to access the path, this can be done by running `python config_ext_calc.py clusteringModelsPath <yourpathhere>`
+
+9. Follow the instructions in external-calc readme (typically located `~/D:/ProgramData/Seeq/data/plugins/external-calculation/python/readme.html`) to install `hdbscan`. Here is an exceprt from the readme, explaining how to do this:
 
 	*Installation of additional libraries can be done by executing the following steps:*
 
@@ -184,7 +188,7 @@ If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not ha
 	*To install your own Python libraries, run in this window (seeqprompt window) the following command:*
 
 	```
-	python -m pip install hdbscan -t plugins\lib\python3
+	python -m pip install -U hdbscan -t plugins\lib\python3
 	### if you need to install additional packages, e.g. seeq, replace hdbscan with <packagename>
 	```
 	*where hdbscan is the name of the module we wish to install.*
@@ -199,33 +203,12 @@ If you are unable to run `python _Clustering_config.py` (*e.g.* if you do not ha
 
 If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbscan-ext-calc-install)
 
-8. In any Seeq workbook, retrieve the Script Name of the newly created Clustering.py external calc call. Wait a few moments for it to update, you should see the external-calc script show up (it will be called `Clustering.py:NUMERIC:<your_unique_checksum>`). **important** Ensure you grab the complete script name (including `Clustering.py:NUMERIC:`, not just the checksum):
+To **confirm** that the external calculation has been installed correctly, in Seeq Workbench ensure that create a new formula and search for `cluster`. You should see the following:
 
-![N|Scheme](images/checksum_from_dropdown.png)
+![N|Scheme](images/formula.png)
 
-If you the checksum is not appearing see [here](#clustering-checksum-doesnt-show-in-seeq)
+If you run into errors, [please open an issue](https://github.com/seeq12/seeq-clustering/issues)
 
-
-9. In your existing Seeq Data Lab **Terminal** window, navigate to `clustering` directory: `cd seeq-clustering/seeq/addons/clustering/`
-
-
-10. Update your app to point to your unique Script Name. Run `python _config.py checksum <yourchecksumhere>` where `<your_script_name_here>` is that which you retrieved previously (from a Seeq workbook)
-
-11. Note the URL of your Seeq Server instance (e.g. `https://my.seeq.com/`), and the URL of your Clustering `App.ipynb` notebook (located in the `seeq-clustering/seeq/addons/clustering/` directory), *e.g.* `https://my.seeq.com/data-lab/CBA9A827-35A8-4944-8A74-EE7008DC3ED8/notebooks/seeq-server/seeq/addons/clustering/App.ipynb`, you will need this in a moment.
-
-12. Install the addon. In Seeq Data Lab **terminal**, navigate to the directory: `cd ~/seeq-clustering/seeq/addons/clustering/`. Run `python _install_addon.py --username <username> --password <password> --seeq_url <seeq_server_url> --app_url <app_notebook_url>`, where `<seeq_server_url>` and `<app_notebook_url>` are the urls for the server and specific url for the clustering App notebook, respectively.
-
-Here is an example:
-
-```bash
-python _install_addon.py --username me@me.com --password mypass --seeq_url https://my.seeq.com/ --app_url https://my.seeq.com/data-lab/6E8C6D21-50BB-4209-8B8D-4B6A8D94E5C2/notebooks/hb/seeq/addons/clustering/App.ipynb
-```
-
-There are additional **Options** for the addon installation. These include `--users` and `--groups`. These can be used to change permissions for the addon tool. For example to give permission to users `me` and `you` one would install the addon with as:
-
-```bash
-python _install_addon.py --username me@me.com --password mypass --seeq_url https://my.seeq.com/ --app_url https://my.seeq.com/data-lab/6E8C6D21-50BB-4209-8B8D-4B6A8D94E5C2/notebooks/hb/seeq/addons/clustering/App.ipynb --users me you
-```
 
 ### Troubleshooting Install
 
@@ -238,11 +221,13 @@ To manually update the cluster model path, open `Clustering.py` in a text editor
 wkdir = ''
 ```
 
-Manually enter the path where you wish to save the clustering models by updating the wkdir variable (yes, this means ignoring the warning in the first line and YES change line 2. To replicate default behavior, updated `wkdir` to be the same **absolute** path as the directory which holds `Clustering.py`, e.g.:
+Manually enter the path where you wish to save the clustering models by updating the wkdir variable (yes, this means ignoring the warning in the first line and YES change line 2. To replicate default behavior, updated `wkdir` to be the same **absolute** path as the directory which holds `Basic.py`, e.g.:
 
 ```
-wkdir = 'D:/Seeq/plugins/external-calculation/python/user/'
+wkdir = 'D:/Seeq/plugins/external-calculation/python/user/ClusteringCalc/'
 ```
+
+Ensure that you use `/` in favor of `\`. 
 
 #### Errors in hdbscan ext-calc install
 
@@ -265,22 +250,6 @@ simply follow the link provided in the error (https://visualstudio.microsoft.com
 </p>
 
 You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#pip-install-hdbscan-for-external-calc))
-
-#### Clustering checksum doesn't show in Seeq
-
-If you had to do [manually setup for clustering config](#Manual-external-calc-Clustering-Config), ensure that no `\` were used in the absolute path. Replace with `/`.
-
-Ensure you are using the correct path `~/external-calculation/python/user/` for your instance of Seeq that is currently running. 
-
-You may have to [install seeq](https://pypi.org/project/seeq/) for external calc. See instructions [above](#pip-Install-hdbscan-for-external-calc)
-
-#### SPyRuntimeError while pushing conditions
-
-If you encounter the error while pushing conditions (during app excecution): `SPyRuntimeError: Error pushing "{ID}" {Condition} <name> : Failed to write item in batch request: variable is undefined at '$a', line=1, column=271`. Ensure that you have correctly copied the complete external calc Script Name (Step 8). Be sure to include the full name `Clustering.py:NUMERIC:<your_unique_checksum>`.
-
-#### Updating External Calc
-
-If you update the external calc code for any reason (maybe change model storage location for example), a new, unique checksum will be generated. You must reconfigure the app in this scenario by following [these steps above](#Run-the-following-command-to-update-your-instance-of-clustering-to-point-to-your-instance-of-the-external-calc-script)
 
 ----
 
