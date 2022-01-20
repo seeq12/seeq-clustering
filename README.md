@@ -349,6 +349,10 @@ If, for some reason you wish to undo this change:
 python -m seeq.addons.clustering._external_calc_override --override False
 ```
 
+2. Signals do not appear in worksheet after completion.
+
+Wait for the loading to complete (loading bar at the top of the screen has dissappeared). Reload the webpage. 
+
 ----
 
 # Development
