@@ -6,6 +6,9 @@ import datetime
 import warnings
 import time
 
+from seeq import spy
+from packaging import version
+
 import IPython
 from IPython.display import clear_output, Javascript
 
@@ -160,60 +163,120 @@ class App():
 			basename (str): Basename for the clusters
 			timeOfRun (str): Datetime of run. This gives us a unique identifier.
 		"""
-		self.push_clusterer()
+		if version.parse(spy.__version__) >= version.parse('53.4'):
+			### R54 case
+			self.push_clusterer()
 
-		conditioners = self.clusteron
-		bodies = [] #initializing for spy.push
+			conditioners = self.clusteron
+			bodies = [] #initializing for spy.push
 
-		#determine if we are doing density based or visual:
-		try:
-			iterable = np.sort(list(set(self.clusterer.labels_)))
-		except AttributeError: #case when we are doing contours and visual selection
-			iterable = [0]
+			#determine if we are doing density based or visual:
+			try:
+				iterable = np.sort(list(set(self.clusterer.labels_)))
+			except AttributeError: #case when we are doing contours and visual selection
+				iterable = [0]
 
-		#need to account for alphanumeric sorting of clusters:
-		max_clustern = max(iterable)
-		#how long should each label be? i.e. if we have over 10 clusters, each label should be two digits. if over 100, it should be 3 digits
-		len_of_label = len(str(max_clustern))
+			#need to account for alphanumeric sorting of clusters:
+			max_clustern = max(iterable)
+			#how long should each label be? i.e. if we have over 10 clusters, each label should be two digits. if over 100, it should be 3 digits
+			len_of_label = len(str(max_clustern))
 
-		for clustern in iterable:
+			for clustern in iterable:
 
-			if clustern == -1:
-				continue
+				if clustern == -1:
+					continue
 
-			##now generate the formula
-			alphabet = 'abcdefghijklmnopqrst'
-			
-			seeq_dollarsign_ids = []
-			j = 0 #multiplier duplicate count of letters
-			for i in range(len(conditioners)):
-				if np.mod(i,len(alphabet)) == 0:
-					j+=1
-				seeq_dollarsign_ids.append(alphabet[np.mod(i, len(alphabet))]*j)
+				##now generate the formula
+				alphabet = 'abcdefghijklmnopqrst'
+				
+				seeq_dollarsign_ids = []
+				j = 0 #multiplier duplicate count of letters
+				for i in range(len(conditioners)):
+					if np.mod(i,len(alphabet)) == 0:
+						j+=1
+					seeq_dollarsign_ids.append(alphabet[np.mod(i, len(alphabet))]*j)
 
-			insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
-			for dollarsign_id in seeq_dollarsign_ids:
-				insertion_into_formula += "$" + str(dollarsign_id) + ","
-			insertion_into_formula = insertion_into_formula[:-1]
+				insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
+				for dollarsign_id in seeq_dollarsign_ids:
+					insertion_into_formula += "$" + str(dollarsign_id) + ","
+				insertion_into_formula = insertion_into_formula[:-1]
 
-			formula_string = "ClusteringCalc_ndim('{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
-			formula = formula_string.format(self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
-			#print(formula)
-			
-			parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
+				formula_string = "ClusteringCalc_ndim('{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
+				formula = formula_string.format(self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
+				#print(formula)
+				
+				parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
 
-			label = (str('0'*len_of_label) + str(clustern))[-len_of_label:] #for alpha numeric sorting if needed. 
+				label = (str('0'*len_of_label) + str(clustern))[-len_of_label:] #for alpha numeric sorting if needed. 
 
-			name = basename + ' ' + label + ' ' + timeOfRun
-			body={'Name':name, 'Formula':formula, 
-			'Formula Parameters':parametersdict, 'Type':'Condition'}
-			bodies.append(body)
+				name = basename + ' ' + label + ' ' + timeOfRun
+				body={'Name':name, 'Formula':formula, 
+				'Formula Parameters':parametersdict, 'Type':'Condition'}
+				bodies.append(body)
 
-		metatag = pd.DataFrame(bodies)
+			metatag = pd.DataFrame(bodies)
 
-		condition_results = seeqInterface.push_formula(metatag, self.workbook_id, self.worksheet_name)
-		self.condition_results = condition_results
-		return
+			condition_results = seeqInterface.push_formula(metatag, self.workbook_id, self.worksheet_name)
+			self.condition_results = condition_results
+			return
+		else:
+			### R53 case	
+			self.push_clusterer()
+
+			conditioners = self.clusteron
+			bodies = [] #initializing for spy.push
+
+			#determine if we are doing density based or visual:
+			try:
+				iterable = np.sort(list(set(self.clusterer.labels_)))
+			except AttributeError: #case when we are doing contours and visual selection
+				iterable = [0]
+
+			#need to account for alphanumeric sorting of clusters:
+			max_clustern = max(iterable)
+			#how long should each label be? i.e. if we have over 10 clusters, each label should be two digits. if over 100, it should be 3 digits
+			len_of_label = len(str(max_clustern))
+
+			for clustern in iterable:
+
+				if clustern == -1:
+					continue
+
+				##now generate the formula
+				alphabet = 'abcdefghijklmnopqrstuvwxyz'
+				
+				seeq_dollarsign_ids = []
+				j = 0 #multiplier duplicate count of letters
+				for i in range(len(conditioners)):
+					if np.mod(i,26) == 0:
+						j+=1
+					seeq_dollarsign_ids.append(alphabet[np.mod(i, 26)]*j)
+
+				insertion_into_formula = ""#an example would be .toSignal(), $a, $b) this is the $a, $b part
+				for dollarsign_id in seeq_dollarsign_ids:
+					insertion_into_formula += "$" + str(dollarsign_id) + ","
+				insertion_into_formula = insertion_into_formula[:-1]
+
+				#TODO: finish up formula
+				formula_string = "externalCalculation('{}', '{}&&{}&&{}&&{}'.toSignal(),"+ insertion_into_formula +").setMaxInterpolation({}).toCondition().merge(0, true)"
+				formula = formula_string.format(checksum, self.api_url, self.auth_token, self.clusterer_seeq_id, clustern, self.grid)
+				#print(formula)
+				
+				parametersdict = dict({seeq_dollarsign_ids[i]:self.idlist[i] for i in range(len(conditioners))})
+
+				label = (str('0'*len_of_label) + str(clustern))[-len_of_label:] #for alpha numeric sorting if needed. 
+
+				name = basename + ' ' + label + ' ' + timeOfRun
+				body={'Name':name, 'Formula':formula, 
+				'Formula Parameters':parametersdict, 'Type':'Condition'}
+				bodies.append(body)
+
+			metatag = pd.DataFrame(bodies)
+
+			condition_results = seeqInterface.push_formula(metatag, self.workbook_id, self.worksheet_name)
+			self.condition_results = condition_results
+			return
+		
 
 	def update_temp_wkstep(self):
 		"""
