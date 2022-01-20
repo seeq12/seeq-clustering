@@ -333,6 +333,22 @@ simply follow the link provided in the error (https://visualstudio.microsoft.com
 
 You will likely then have to close your command prompt, and rerun `seeqprompt.bat` before attempting to install hdbscan again (see [steps](#pip-install-hdbscan-for-external-calc))
 
+## Troubleshooting
+
+1. Error `SPyRuntimeError: Error pushing "[39575A91-37A5-4461-AC8C-7821B54B4237] {Condition} Cluster 0 01/20/2022, 06:13:12": Failed to write item in batch request: Invalid script reference. Expected: fileName.{py|xlsx|xlam|xlsm}[:functionName]:resultDataType:checkSum at 'externalCalculation', line=1, column=1`
+
+This occurs from a change to how external calculations function that occurred after Seeq R54. This can be overridden by (*i.e.*, you can force the R54 usage style):
+
+```bash
+python -m seeq.addons.clustering._external_calc_override  --override True
+```
+
+If, for some reason you wish to undo this change:
+
+```bash
+python -m seeq.addons.clustering._external_calc_override --override False
+```
+
 ----
 
 # Development
