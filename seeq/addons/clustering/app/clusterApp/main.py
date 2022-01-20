@@ -23,6 +23,7 @@ from .ui import checksum, selectType, clusterUnsupervised, clusterSupervised, st
 
 from .. import seeqInterface
 from .. import historicalBenchmarking
+from ..._external_calc_override import ext_calc_override
 
 key = 'xAneo3b9Qsa5402ai4YqAg'
 
@@ -163,7 +164,7 @@ class App():
 			basename (str): Basename for the clusters
 			timeOfRun (str): Datetime of run. This gives us a unique identifier.
 		"""
-		if version.parse(spy.__version__) >= version.parse('53.4'):
+		if version.parse(spy.__version__) >= version.parse('53.4') or ext_calc_override:
 			### R54 case
 			self.push_clusterer()
 
