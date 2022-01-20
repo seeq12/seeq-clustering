@@ -299,7 +299,7 @@ python -m seeq.addons.clustering --users me you
 
 #### Manual external-calc Clustering Config
 
-To manually update the cluster model path, open `Clustering.py` in a text editor. The top two lines should be:
+To manually update the cluster model path, open either `Basic.py` (>R54) `Clustering.py` (R53) in a text editor. The top two lines should be (or something similar):
 
 ```
 #DO NOT CHANGE THE FOLLOWING LINE OR THIS LINE
