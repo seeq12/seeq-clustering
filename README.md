@@ -148,7 +148,7 @@ pip install <whl_file_name>
 python -m seeq.addons.clustering
 ```
 
-and follow the instructions when prompted. 
+and follow the instructions when prompted. ("Username or Access Key" is what you use to log in to Seeq. "Password" is your password for logging into Seeq.)
 
 There are additional **Options** for the addon installation. These include `--users` and `--groups`. These can be used to change permissions for the addon tool. For example to give permission to users `me` and `you` one would install the addon with as:
 
@@ -275,12 +275,9 @@ If you run into an error in installation of `hdbscan` see [note](#errors-in-hdbs
 ![N|Scheme](images/checksum_from_dropdown.png)
 
 
-9. In your existing Seeq Data Lab **Terminal** window, navigate to `clustering` directory: `cd seeq-clustering/seeq/addons/clustering/`
+9. Update your app to point to your unique checksum. Run `python -m seeq.addons.clustering.config --script_name <yourkeyhere>` where `<yourkeyhere>` is that which you retrieved previously (from a Seeq workbook), *e.g.*, the complete key: `Clustering.py:NUMERIC:q2tYWyXR+cw7` 
 
-
-10. Update your app to point to your unique checksum. Run `python -m seeq.addons.clustering.config --script_name <yourkeyhere>` where `<yourkeyhere>` is that which you retrieved previously (from a Seeq workbook), *e.g.*, the complete key: `Clustering.py:NUMERIC:q2tYWyXR+cw7` 
-
-11. Install the add-on tool
+10. Install the add-on tool
 
 ```python
 python -m seeq.addons.clustering

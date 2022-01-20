@@ -460,10 +460,10 @@ class GUI():
 		
 		#Seeq logo
 		logo = HTML(
-			"<img src='https://www.seeq.com/sites/default/files/Seeq_Logo_PMS%20close%20crop_0.png' width=100px>"
+			""
 		)
 
-		_under_logo = HTML('<h3>Scatterplot Clustering</h3>')
+		_under_logo = HTML('<h1>Clustering</h1>')
 
 		### Buttons and Widgets ###
 		_cluster_name = Text(
