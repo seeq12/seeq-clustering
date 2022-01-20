@@ -1,3 +1,5 @@
+[![PyPI version fury.io](https://badge.fury.io/py/seeq-clustering.svg)](https://pypi.org/project/seeq-clustering/)
+
 # Contents
 
 1. [User Guide](#user-guide)
